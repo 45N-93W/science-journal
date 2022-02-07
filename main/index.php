@@ -14,10 +14,6 @@ session_start();
             background: gray;
         }
 
-        .nav-menu .nav-list {
-            display: inline-block;
-            padding: 4px;
-        }
 
         .nav-list .nav-list a {
             display: inline-block;
@@ -25,12 +21,11 @@ session_start();
         }
     </style>
     <script>
-        theme = localStorage.setItem("theme","light");
-        function SetDarkTheme() {
-            if(theme.getItem("t"))
-        }
-            
+        theme = localStorage.setItem("theme", "light");
 
+        function SetDarkTheme() {
+            if (theme.getItem("t"))
+        }
     </script>
 </head>
 

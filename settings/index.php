@@ -19,14 +19,11 @@ $_Session["username"] = null;
             background: gray;
         }
 
-        .nav-menu .nav-list {
-            display: inline-block;
-            padding: 4px;
-        }
-
+        
         .nav-list .nav-list a {
             display: inline-block;
             list-style-type: none;
+            
         }
     </style>
 </head>
