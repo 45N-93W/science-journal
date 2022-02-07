@@ -1,0 +1,4 @@
+header {
+    color: white;
+    background:-moz-linear-gradient(to bottom",red","blue");
+}
