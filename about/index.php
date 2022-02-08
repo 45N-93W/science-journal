@@ -19,6 +19,7 @@
             list-style-type: none;
         }
     </style>
+    <script src="../assets/themes.js"></script>
 </head>
 
 <body>
@@ -42,9 +43,13 @@
             <h1>about me</h1>
             <p> i am a programmer called athepony have a another but i would reather not use it.</p>
             <p>created for n43w92</p>
+            <br>
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
 
 
         </div>
+
     </main>
 </body>
 

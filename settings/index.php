@@ -13,6 +13,7 @@ $_Session["username"] = null;
     <meta name="description" content="journal ">
     <meta name="author" content="athepony">
     <title>scientific Journal -Settings</title>
+    <script src="../assets/themes.js"></script>
     <style type="text/css">
         header {
             color: white;
@@ -64,6 +65,9 @@ $_Session["username"] = null;
             echo "</form>";
         }
         ?>
+        <br>
+        <button onclick="SetDarkMode();">dark</button>
+        <button onclick="SetLightMode();">light</button>
     </main>
 
 

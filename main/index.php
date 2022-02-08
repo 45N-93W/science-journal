@@ -21,11 +21,7 @@ session_start();
         }
     </style>
     <script>
-        theme = localStorage.setItem("theme", "light");
 
-        function SetDarkTheme() {
-            if (theme.getItem("t"))
-        }
     </script>
 </head>
 
@@ -53,11 +49,13 @@ session_start();
         $password = "A714708o";
         $db = new mysqli("localhost", $username, $password, "journal");
         $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
-        echo "$posts[1] $posts[2] ";
-
+        foreach($posts as $post) {
+            echo $post;
+        }
         ?>
-        <button onclick="setDarkTheme();">dark</button>
-        <button onclick="setLightTheme();">light</button>
+        <br>
+        <button onclick="SetDarkMode();">dark</button>
+        <button onclick="SetLightMode();">light</button>
     </main>
 </body>
 
