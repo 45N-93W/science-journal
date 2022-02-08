@@ -1,55 +1,30 @@
+<!doctype html>
 <html>
 <?php
 session_start();
 ?>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="journal ">
-    <meta name="description" content="journal ">
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-        .nav-menu .nav-list {
-            display: inline-block;
-            padding: 4px;
-        }
-
-        .nav-list .nav-list li a {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
-    <script>
-        function SetDarkTheme() {
-            page = document.getElementById("page");
-            page.style.background = "black";
-
-        }
-
-4       function setlightTheme() {            
-        page = document.getElementById("page");
-        page.style.background = "white";
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="journal ">
+<meta name="author" content="athepony">
+<title>scientific Journal -Settings</title>
+<script src="../assets/themes.js"></script>
+<link rel="stylesheet" type="text/css" href="../assets/theme.css">
 </head>
 
-<body id="page">
-    <header>about page</header>
+<body>
+    <header>main page</header>
     <nav class="nav-menu">
         <ul class="nav-list">
             <li class="active">
-                <a href="./main">Home</a>
+                <a href="../main">Home</a>
             </li>
             <li>
-                <a href="./about">About</a>
+                <a href="../about">About</a>
             </li>
             <li>
-                <a href="./settings">Settings</a>
+                <a href="../settings">Settings</a>
             </li>
 
         </ul>
@@ -62,11 +37,14 @@ session_start();
         $password = "A714708o";
         $db = new mysqli("localhost", $username, $password, "journal");
         $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
-        echo "$posts[1] $posts[2] ";
-
+        foreach($posts as $post) {
+            echo "<br>$post";
+        }
         ?>
-        <button onclick="setDarkTheme();">dark</button>
-        <button onclick="setLightTheme();">light</button>
+        <br>
+        <br>
+        <button onclick="SetDarkMode();">dark</button>
+        <button onclick="SetLightMode();">light</button>
     </main>
 </body>
 
