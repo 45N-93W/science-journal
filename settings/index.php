@@ -1,3 +1,4 @@
+<!doctype html>
 <?php
 session_start();
 $_Session["username"] = null;
@@ -11,23 +12,10 @@ $_Session["username"] = null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="journal ">
-    <meta name="author" content="austin heisley-cook">
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-        .nav-menu .nav-list {
-            display: inline-block;
-            padding: 4px;
-        }
-
-        .nav-list .nav-list li a {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
+    <meta name="author" content="athepony">
+    <title>scientific Journal -Settings</title>
+    <script src="../assets/themes.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
 </head>
 
 <body>
@@ -35,13 +23,13 @@ $_Session["username"] = null;
     <nav class="nav-menu">
         <ul class="nav navbar-nav nav">
             <li class="active">
-                <a href="/main">Home</a>
+                <a href="../main">Home</a>
             </li>
             <li>
-                <a href="about">About</a>
+                <a href="../about">About</a>
             </li>
             <li>
-                <a href="settings">Settings</a>
+                <a href="../settings">Settings</a>
             </li>
 
         </ul>
@@ -66,6 +54,9 @@ $_Session["username"] = null;
             echo "</form>";
         }
         ?>
+        <br>
+        <button onclick="SetDarkMode();">dark</button>
+        <button onclick="SetLightMode();">light</button>
     </main>
 
 
