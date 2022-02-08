@@ -2,62 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/journal.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/tasks.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Users.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/style.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/style.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/setup.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/users.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/image0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/copytodev.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/Users.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/about/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/assets/style.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/assets/style.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/Users.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/journal.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/kite-installer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/server.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/start.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/start.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/startapp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/user.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journak/users.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/journal.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/kite-installer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/server.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/start.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/start.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/startapp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/user.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journak/journak/users.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/journal.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kite-installer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/journal.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/startapp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/journak" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +34,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/postboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="PHPUnit.journak">
@@ -122,6 +68,7 @@
       <workItem from="1644022283090" duration="599000" />
       <workItem from="1644115757261" duration="689000" />
       <workItem from="1644122612246" duration="21000" />
+      <workItem from="1644344305832" duration="11000" />
     </task>
     <servers />
   </component>
