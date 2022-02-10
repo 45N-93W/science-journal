@@ -22,5 +22,16 @@ body {
     transition: 1s;
 }
 button {
-    border-radius: radius;
+    border-radius: 4px;
+    position: relative;
+    left:10px;
+}
+.theme-toggles {
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    left: 400px;
+    top: 40xp;
+    background: cadetblue;
+    text-shadow: 4px 0 0 4px;
 }

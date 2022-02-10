@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added changes" />
+    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added changes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/about/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/themes.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/themes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/about/index.php" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
@@ -93,7 +98,8 @@
       <workItem from="1644344305832" duration="122000" />
       <workItem from="1644344435369" duration="10658000" />
       <workItem from="1644466661521" duration="1250000" />
-      <workItem from="1644522860348" duration="1070000" />
+      <workItem from="1644522860348" duration="3683000" />
+      <workItem from="1644540388060" duration="218000" />
     </task>
     <task id="LOCAL-00001" summary="added">
       <created>1644344351524</created>
@@ -123,7 +129,21 @@
       <option name="project" value="LOCAL" />
       <updated>1644524794253</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added changes">
+      <created>1644525075190</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1644525075190</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added changes">
+      <created>1644527447550</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1644527447550</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -37,8 +37,8 @@ $_COOKIE["username"] = null;
         /** @var TYPE_NAME $_COOKIE */
 echo "<b> current:$_COOKIE[username]";
         $db = new mysqli("localhost", $username, $password, "journal");
-        $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
-        echo "$posts[1] $posts[2] ";
+        $posts = $db->query("SELECT * FROM POST")->fetch_Array();
+        echo "<sub>$posts[0]</sub> <h3>$posts[1]</h3> <p>$posts[2]</p> ";
 
         ?>
         <div class="theme-toggles">

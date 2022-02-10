@@ -7,8 +7,6 @@ function SetLightMode() {
     header.item(1).style.background = "black";
     button.item(0).style.background = "black";
     button.item(1).style.background = "black";
-    button.item(0).style.color = "white";
-    button.item(1).style.color = "white";
 
 
 }
@@ -16,8 +14,6 @@ function SetDarkMode() {
     document.body.style.background = "black";
     document.body.style.color = "white";
     header.item(1).style.background = "white";
-    button.item(0).style.background = "white";
-    button.item(1).style.background = "white";
     button.item(0).style.color = "black";
     button.item(1).style.color= "black"
 

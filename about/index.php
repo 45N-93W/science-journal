@@ -7,18 +7,8 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="journal ">
     <title> scientific Journal -about</title>
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-
-        .nav-menu .nav-list a {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <script src="../assets/themes.js"></script>
 </head>
 
 <body>
