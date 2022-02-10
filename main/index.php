@@ -1,14 +1,15 @@
-<!doctype html>
-<html lang="en">
+<html>
+<?php
+$_COOKIE["username"] = null;
+?>
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="description" content="journal ">
-<meta name="author" content="athepony">
-<title>scientific Journal -Settings</title>
-<script src="../assets/themes.js"></script>
-<link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="journal ">
+    <meta name="description" content="journal ">
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <script src="../assets/themes.js"></script>
 </head>
 
 <body>
@@ -29,29 +30,19 @@
     </nav>
     <main>
         <?php
-        $post = $_COOKIE["post_id"];
+
         $host = "localhost";
         $username = "aheisleycook";
         $password = "A714708o";
-        $post_id = 0;
+        /** @var TYPE_NAME $_COOKIE */
+echo "<b> current:$_COOKIE[username]";
         $db = new mysqli("localhost", $username, $password, "journal");
-        if($post == null) {
+        $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
+        echo "$posts[1] $posts[2] ";
 
-            $posts = $db->query("SELECT * FROM POST where  POST_ID=1")->fetch_Array();
-        }
-        else {
-            $posts = $db->query("SELECT * FROM POST where  POST_ID=$post")->fetch_Array();
-        }
-
-        echo "<sub>$posts[0]<sub></sub> $posts[1]";
         ?>
-        <br>
-        <br>
-        <button onclick="SetDarkMode();">dark</button>
-        <button onclick="SetLightMode();">light</button>
-        <a href="../main/next.php">next</a>
-
-        </button>
+        <button onclick="setDarkTheme();">dark</button>
+        <button onclick="setLightTheme();">light</button>
     </main>
 </body>
 

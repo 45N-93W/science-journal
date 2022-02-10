@@ -6,10 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="journal ">
-    <meta name="author" content="athepony">
-    <title>scientific Journal -Settings</title>
-    <script src="../assets/themes.js"></script>
-    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <title> scientific Journal -about</title>
+    <style type="text/css">
+        header {
+            color: white;
+            background: gray;
+        }
+
+
+        .nav-menu .nav-list a {
+            display: inline-block;
+            list-style-type: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,13 +42,9 @@
             <h1>about me</h1>
             <p> i am a programmer called athepony have a another but i would reather not use it.</p>
             <p>created for n43w92</p>
-            <br>
-            <button onclick="SetDarkMode();">dark</button>
-            <button onclick="SetLightMode();">light</button>
 
 
         </div>
-
     </main>
 </body>
 

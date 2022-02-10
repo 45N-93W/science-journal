@@ -1,3 +1,4 @@
+<!doctype html>
 <?php
 session_start();
 $_Session["username"] = null;
@@ -14,19 +15,7 @@ $_Session["username"] = null;
     <meta name="author" content="athepony">
     <title>scientific Journal -Settings</title>
     <script src="../assets/themes.js"></script>
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-        
-        .nav-list .nav-list a {
-            display: inline-block;
-            list-style-type: none;
-            
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
 </head>
 
 <body>

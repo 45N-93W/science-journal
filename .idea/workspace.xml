@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added">
-      <change afterPath="$PROJECT_DIR$/assets/themes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/devtoprod.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added dark mode and light mode support">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/about/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/main/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -33,6 +27,11 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.1">
+    <include_path>
+      <path value="$PROJECT_DIR$" />
+    </include_path>
   </component>
   <component name="ProjectId" id="24NiCG2EmfesamP7mbDbmDeAcTx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -48,23 +47,33 @@
     <property name="DatabaseDriversLRU" value="sqlite&#10;mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="PHPUnit.journak">
+  <component name="RunManager" selected="PHP Built-in Web Server.Unnamed">
     <configuration name="users.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/data/users.sql" />
       <script-mode>FILE</script-mode>
       <method v="2" />
     </configuration>
     <configuration name="journak" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
       <TestRunner directory="$PROJECT_DIR$/journak" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Database Script.users.sql" />
+      <item itemvalue="PHP Built-in Web Server.Unnamed" />
+      <item itemvalue="PHPUnit.journak" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="PHPUnit.journak" />
@@ -86,7 +95,9 @@
       <workItem from="1644115757261" duration="689000" />
       <workItem from="1644122612246" duration="21000" />
       <workItem from="1644344305832" duration="122000" />
-      <workItem from="1644344435369" duration="2355000" />
+      <workItem from="1644344435369" duration="10658000" />
+      <workItem from="1644466661521" duration="1250000" />
+      <workItem from="1644522860348" duration="679000" />
     </task>
     <task id="LOCAL-00001" summary="added">
       <created>1644344351524</created>
@@ -95,7 +106,21 @@
       <option name="project" value="LOCAL" />
       <updated>1644344351524</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added dark mode and light mode support">
+      <created>1644346861582</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1644346861582</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added dark mode and light mode support">
+      <created>1644346884542</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1644346884542</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +140,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="added" />
-    <option name="LAST_COMMIT_MESSAGE" value="added" />
+    <MESSAGE value="added dark mode and light mode support" />
+    <option name="LAST_COMMIT_MESSAGE" value="added dark mode and light mode support" />
   </component>
 </project>

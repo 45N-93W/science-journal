@@ -1,0 +1,26 @@
+header {
+    color: white;
+    background: gray;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 4px;
+
+}
+
+
+nav ul li a {
+    display: inline-block;
+    list-style-type: none;
+    text-decoration: none;
+
+}
+
+body {
+
+    transition: 1s;
+}
+button {
+    border-radius: radius;
+}
