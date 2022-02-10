@@ -41,8 +41,10 @@ echo "<b> current:$_COOKIE[username]";
         echo "$posts[1] $posts[2] ";
 
         ?>
-        <button onclick="setDarkTheme();">dark</button>
-        <button onclick="setLightTheme();">light</button>
+        <div class="theme-toggles">
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
+        </div>
     </main>
 </body>
 
