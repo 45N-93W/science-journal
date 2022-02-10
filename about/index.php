@@ -6,20 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="journal ">
-    <title> scientific Journal -about</title>
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-
-        .nav-list .nav-list a {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
+    <meta name="author" content="athepony">
+    <title>scientific Journal -Settings</title>
     <script src="../assets/themes.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
 </head>
 
 <body>

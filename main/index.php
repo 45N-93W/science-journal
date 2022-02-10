@@ -1,28 +1,14 @@
-<html>
-<?php
-session_start();
-?>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="journal ">
-    <meta name="description" content="journal ">
-    <style type="text/css">
-        header {
-            color: white;
-            background: gray;
-        }
-
-
-        .nav-list .nav-list a {
-            display: inline-block;
-            list-style-type: none;
-        }
-    </style>
-    <script>
-
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="journal ">
+<meta name="author" content="athepony">
+<title>scientific Journal -Settings</title>
+<script src="../assets/themes.js"></script>
+<link rel="stylesheet" type="text/css" href="../assets/theme.css">
 </head>
 
 <body>
@@ -43,19 +29,29 @@ session_start();
     </nav>
     <main>
         <?php
-
+        $post = $_COOKIE["post_id"];
         $host = "localhost";
         $username = "aheisleycook";
         $password = "A714708o";
+        $post_id = 0;
         $db = new mysqli("localhost", $username, $password, "journal");
-        $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
-        foreach($posts as $post) {
-            echo $post;
+        if($post == null) {
+
+            $posts = $db->query("SELECT * FROM POST where  POST_ID=1")->fetch_Array();
         }
+        else {
+            $posts = $db->query("SELECT * FROM POST where  POST_ID=$post")->fetch_Array();
+        }
+
+        echo "<sub>$posts[0]<sub></sub> $posts[1]";
         ?>
+        <br>
         <br>
         <button onclick="SetDarkMode();">dark</button>
         <button onclick="SetLightMode();">light</button>
+        <a href="../main/next.php">next</a>
+
+        </button>
     </main>
 </body>
 
