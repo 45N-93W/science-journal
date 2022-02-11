@@ -1,16 +1,15 @@
-<!doctype html>
 <html>
 <?php
-session_start();
+$_COOKIE["username"] = null;
 ?>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="description" content="journal ">
-<meta name="author" content="athepony">
-<title>scientific Journal -Settings</title>
-<script src="../assets/themes.js"></script>
-<link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="journal ">
+    <meta name="description" content="journal ">
+    <link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <script src="../assets/themes.js"></script>
 </head>
 
 <body>
@@ -35,16 +34,17 @@ session_start();
         $host = "localhost";
         $username = "aheisleycook";
         $password = "A714708o";
+        /** @var TYPE_NAME $_COOKIE */
+echo "<b> current:$_COOKIE[username]";
         $db = new mysqli("localhost", $username, $password, "journal");
-        $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
-        foreach($posts as $post) {
-            echo "<br>$post";
-        }
+        $posts = $db->query("SELECT * FROM POST")->fetch_Array();
+        echo "<sub>$posts[0]</sub> <h3>$posts[1]</h3> <p>$posts[2]</p> ";
+
         ?>
-        <br>
-        <br>
-        <button onclick="SetDarkMode();">dark</button>
-        <button onclick="SetLightMode();">light</button>
+        <div class="theme-toggles">
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
+        </div>
     </main>
 </body>
 
