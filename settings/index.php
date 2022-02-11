@@ -20,8 +20,8 @@ $_Session["username"] = null;
 
 <body>
     <header>settings</header>
-    <nav class="nav-menu">
-        <ul class="nav navbar-nav nav">
+    <nav>
+        <ul>
             <li class="active">
                 <a href="../main">Home</a>
             </li>
@@ -31,7 +31,6 @@ $_Session["username"] = null;
             <li>
                 <a href="../settings">Settings</a>
             </li>
-
         </ul>
     </nav>
     <main>
@@ -55,8 +54,11 @@ $_Session["username"] = null;
         }
         ?>
         <br>
-        <button onclick="SetDarkMode();">dark</button>
-        <button onclick="SetLightMode();">light</button>
+        <!-- theme toggle -->
+        <div class="theme-toggles">
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
+        </div>
     </main>
 
 
