@@ -12,7 +12,7 @@ $_COOKIE["username"] = null;
     <script src="../assets/themes.js"></script>
 </head>
 
-<body>
+<body onload="changeTemp();">
     <header>main page</header>
     <nav class="nav-menu">
         <ul class="nav-list">
@@ -30,6 +30,10 @@ $_COOKIE["username"] = null;
         []
     </nav>
     <main>
+        <?php
+        $_COOKIE["theme"] = "light";
+
+        ?>
         <?php
 
         $host = "localhost";

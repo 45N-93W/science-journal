@@ -21,6 +21,11 @@ function SetDarkMode() {
 }
 
 function changeTemp() {
-    var theme = JSON("settings.json");
+    let change = 0
+    let theme = _COOKIE.get("theme");
+    if (theme == "light") {
+        SetLightMode();
+    }
+
+
 }
-changeTemp();
