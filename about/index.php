@@ -35,6 +35,10 @@
 
 
         </div>
+        <div class="theme-toggles">
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
+        </div>
     </main>
 </body>
 

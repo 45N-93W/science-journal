@@ -54,8 +54,11 @@ $_Session["username"] = null;
         }
         ?>
         <br>
-        <button onclick="SetDarkMode();">dark</button>
-        <button onclick="SetLightMode();">light</button>
+        <!-- theme toggle -->
+        <div class="theme-toggles">
+            <button onclick="SetDarkMode();">dark</button>
+            <button onclick="SetLightMode();">light</button>
+        </div>
     </main>
 
 

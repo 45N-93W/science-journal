@@ -27,6 +27,7 @@ $_COOKIE["username"] = null;
             </li>
 
         </ul>
+        []
     </nav>
     <main>
         <?php
@@ -34,10 +35,12 @@ $_COOKIE["username"] = null;
         $host = "localhost";
         $username = "aheisleycook";
         $password = "A714708o";
+        $page = $_GET["post_id"]->url;
         /** @var TYPE_NAME $_COOKIE */
-echo "<b> current:$_COOKIE[username]";
+        echo "<b> current:$_COOKIE[username]";
+
         $db = new mysqli("localhost", $username, $password, "journal");
-        $posts = $db->query("SELECT * FROM POST")->fetch_Array();
+        $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
         echo "<sub>$posts[0]</sub> <h3>$posts[1]</h3> <p>$posts[2]</p> ";
 
         ?>
