@@ -12,7 +12,7 @@ $_COOKIE["username"] = null;
     <script src="../assets/themes.js"></script>
 </head>
 
-<body onload="changeTemp();">
+<body>
     <header>main page</header>
     <nav class="nav-menu">
         <ul class="nav-list">
@@ -31,17 +31,15 @@ $_COOKIE["username"] = null;
     </nav>
     <main>
         <?php
-        $_COOKIE["theme"] = "light";
-
-        ?>
-        <?php
+        $_COOKIE["username"] = "";
+        $current = $_COOKIE["username"];
 
         $host = "localhost";
         $username = "aheisleycook";
         $password = "A714708o";
         $page = $_GET["post_id"]->url;
         /** @var TYPE_NAME $_COOKIE */
-        echo "<b> current:$_COOKIE[username]";
+        echo "<b> current:$current<b/>";
 
         $db = new mysqli("localhost", $username, $password, "journal");
         $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
@@ -49,8 +47,8 @@ $_COOKIE["username"] = null;
 
         ?>
         <div class="theme-toggles">
-            <button onclick="SetDarkMode();">dark</button>
-            <button onclick="SetLightMode();">light</button>
+            <button type="button" onclick="SetLightMode();">set light</button>
+            <button type="button" onclick="SetDarkMode();">set dark</button>
         </div>
     </main>
 </body>

@@ -1,31 +1,27 @@
 function SetLightMode() {
     var header = document.getElementsByTagName("header");
     var button = document.getElementsByTagName("button");
-
     document.body.style.background = "white";
     document.body.style.color = "black";
-    header.item(1).style.background = "black";
+    header.item(0).style.background = "black";
     button.item(0).style.background = "black";
     button.item(1).style.background = "black";
+    button.item(1).style.color = "black";
+    button.item(0).style.color = "black";
+
 
 
 }
 
 function SetDarkMode() {
+    var header = document.getElementsByTagName("header");
+    var button = document.getElementsByTagName("button");
     document.body.style.background = "black";
     document.body.style.color = "white";
     header.item(1).style.background = "white";
-    button.item(0).style.color = "black";
-    button.item(1).style.color = "black"
-
-}
-
-function changeTemp() {
-    let change = 0
-    let theme = _COOKIE.get("theme");
-    if (theme == "light") {
-        SetLightMode();
-    }
-
+    button.item(0).style.background = "white";
+    button.item(1).style.background = "white";
+    button.item(0).style.color = "white";
+    button.item(1).style.color = "white";
 
 }

@@ -41,7 +41,7 @@ $_Session["username"] = null;
         echo "</div>";
 
         if ($_Session["username"] == null) {
-            echo "<form method='POST' action='login.php'>";
+            echo "<form method='POST' action='../settings/login.php'>";
             echo "<input type='hidden' name='username'>";
             echo "<label for='username'>Username</label>";
             echo "<input type='text' id='username' name='username'>";

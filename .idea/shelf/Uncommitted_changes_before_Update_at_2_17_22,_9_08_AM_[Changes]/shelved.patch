@@ -1,0 +1,1602 @@
+Index: settings/login.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\ninclude(\"../Users.php\");\n$host = \"localhost\";\n$username = \"aheisleycook\";\n$password = \"A714708o\";\n$db = new mysqli(\"localhost\", $username, $password, \"journal\");\n$cmd = $db->query(\"SELECT * FROM USERS where USERS_EMAIL = '$_POST[username]' AND USERS_PASSWORD='$_POST[password]'\");\nif ($cmd->result == true) {\n    $_SESSION[\"loggedin\"] = true;\n} elseif ($cmd->result == false) {\n    header(\"Location:/main\");\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings/login.php b/settings/login.php
+--- a/settings/login.php	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/settings/login.php	(date 1644985182801)
+@@ -8,5 +8,5 @@
+ if ($cmd->result == true) {
+     $_SESSION["loggedin"] = true;
+ } elseif ($cmd->result == false) {
+-    header("Location:/main");
++    echo "<a href='../settings'>failed</a>";
+ }
+Index: main/index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><html>\n<?php\n$_COOKIE[\"username\"] = null;\n?>\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width\">\n    <meta name=\"description\" content=\"journal \">\n    <meta name=\"description\" content=\"journal \">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"../assets/theme.css\">\n    <script src=\"../assets/themes.js\"></script>\n</head>\n\n<body onload=\"changeTemp();\">\n    <header>main page</header>\n    <nav class=\"nav-menu\">\n        <ul class=\"nav-list\">\n            <li class=\"active\">\n                <a href=\"../main\">Home</a>\n            </li>\n            <li>\n                <a href=\"../about\">About</a>\n            </li>\n            <li>\n                <a href=\"../settings\">Settings</a>\n            </li>\n\n        </ul>\n        []\n    </nav>\n    <main>\n        <?php\n        $_COOKIE[\"theme\"] = \"light\";\n\n        ?>\n        <?php\n\n        $host = \"localhost\";\n        $username = \"aheisleycook\";\n        $password = \"A714708o\";\n        $page = $_GET[\"post_id\"]->url;\n        /** @var TYPE_NAME $_COOKIE */\n        echo \"<b> current:$_COOKIE[username]\";\n\n        $db = new mysqli(\"localhost\", $username, $password, \"journal\");\n        $posts = $db->query(\"SELECT * FROM POSTS\")->fetch_Array();\n        echo \"<sub>$posts[0]</sub> <h3>$posts[1]</h3> <p>$posts[2]</p> \";\n\n        ?>\n        <div class=\"theme-toggles\">\n            <button onclick=\"SetDarkMode();\">dark</button>\n            <button onclick=\"SetLightMode();\">light</button>\n        </div>\n    </main>\n</body>\n\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main/index.php b/main/index.php
+--- a/main/index.php	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/main/index.php	(date 1644984659754)
+@@ -12,7 +12,7 @@
+     <script src="../assets/themes.js"></script>
+ </head>
+ 
+-<body onload="changeTemp();">
++<body>
+     <header>main page</header>
+     <nav class="nav-menu">
+         <ul class="nav-list">
+@@ -31,17 +31,15 @@
+     </nav>
+     <main>
+         <?php
+-        $_COOKIE["theme"] = "light";
+-
+-        ?>
+-        <?php
++        $_COOKIE["username"] = "";
++        $current = $_COOKIE["username"];
+ 
+         $host = "localhost";
+         $username = "aheisleycook";
+         $password = "A714708o";
+         $page = $_GET["post_id"]->url;
+         /** @var TYPE_NAME $_COOKIE */
+-        echo "<b> current:$_COOKIE[username]";
++        echo "<b> current:$current<b/>";
+ 
+         $db = new mysqli("localhost", $username, $password, "journal");
+         $posts = $db->query("SELECT * FROM POSTS")->fetch_Array();
+@@ -49,8 +47,8 @@
+ 
+         ?>
+         <div class="theme-toggles">
+-            <button onclick="SetDarkMode();">dark</button>
+-            <button onclick="SetLightMode();">light</button>
++            <button type="button" onclick="SetLightMode();">set light</button>
++            <button type="button" onclick="SetDarkMode();">set dark</button>
+         </div>
+     </main>
+ </body>
+Index: assets/themes.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>function SetLightMode() {\n    var header = document.getElementsByTagName(\"header\");\n    var button = document.getElementsByTagName(\"button\");\n\n    document.body.style.background = \"white\";\n    document.body.style.color = \"black\";\n    header.item(1).style.background = \"black\";\n    button.item(0).style.background = \"black\";\n    button.item(1).style.background = \"black\";\n\n\n}\n\nfunction SetDarkMode() {\n    document.body.style.background = \"black\";\n    document.body.style.color = \"white\";\n    header.item(1).style.background = \"white\";\n    button.item(0).style.color = \"black\";\n    button.item(1).style.color = \"black\"\n\n}\n\nfunction changeTemp() {\n    let change = 0\n    let theme = _COOKIE.get(\"theme\");\n    if (theme == \"light\") {\n        SetLightMode();\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/assets/themes.js b/assets/themes.js
+--- a/assets/themes.js	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/assets/themes.js	(date 1644984838271)
+@@ -1,31 +1,27 @@
+ function SetLightMode() {
+     var header = document.getElementsByTagName("header");
+     var button = document.getElementsByTagName("button");
+-
+     document.body.style.background = "white";
+     document.body.style.color = "black";
+-    header.item(1).style.background = "black";
++    header.item(0).style.background = "black";
+     button.item(0).style.background = "black";
+     button.item(1).style.background = "black";
++    button.item(1).style.color = "black";
++    button.item(0).style.color = "black";
++
+ 
+ 
+ }
+ 
+ function SetDarkMode() {
++    var header = document.getElementsByTagName("header");
++    var button = document.getElementsByTagName("button");
+     document.body.style.background = "black";
+     document.body.style.color = "white";
+     header.item(1).style.background = "white";
+-    button.item(0).style.color = "black";
+-    button.item(1).style.color = "black"
+-
+-}
+-
+-function changeTemp() {
+-    let change = 0
+-    let theme = _COOKIE.get("theme");
+-    if (theme == "light") {
+-        SetLightMode();
+-    }
+-
++    button.item(0).style.background = "white";
++    button.item(1).style.background = "white";
++    button.item(0).style.color = "white";
++    button.item(1).style.color = "white";
+ 
+ }
+\ No newline at end of file
+Index: settings/index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!doctype html>\n<?php\nsession_start();\n$_Session[\"username\"] = null;\n?>\n<!DOCTYPE html>\n\n\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width\">\n    <meta name=\"description\" content=\"journal \">\n    <meta name=\"author\" content=\"athepony\">\n    <title>scientific Journal -Settings</title>\n    <script src=\"../assets/themes.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"../assets/theme.css\">\n</head>\n\n<body>\n    <header>settings</header>\n    <nav>\n        <ul>\n            <li class=\"active\">\n                <a href=\"../main\">Home</a>\n            </li>\n            <li>\n                <a href=\"../about\">About</a>\n            </li>\n            <li>\n                <a href=\"../settings\">Settings</a>\n            </li>\n        </ul>\n    </nav>\n    <main>\n        <?php\n        echo \"<div class='user-info'>\";\n        echo \"<b>current user:$_Session[username]</b>\";\n\n        echo \"</div>\";\n\n        if ($_Session[\"username\"] == null) {\n            echo \"<form method='POST' action='login.php'>\";\n            echo \"<input type='hidden' name='username'>\";\n            echo \"<label for='username'>Username</label>\";\n            echo \"<input type='text' id='username' name='username'>\";\n            echo \"<br>\";\n            echo \"<label for='password'>Password</label>\";\n            echo \"<input type='password' id='password' name='password'>\";\n            echo \"<br>\";\n            echo \"<input type='submit' value='Login'>\";\n            echo \"</form>\";\n        }\n        ?>\n        <br>\n        <!-- theme toggle -->\n        <div class=\"theme-toggles\">\n            <button onclick=\"SetDarkMode();\">dark</button>\n            <button onclick=\"SetLightMode();\">light</button>\n        </div>\n    </main>\n\n\n</body>\n\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings/index.php b/settings/index.php
+--- a/settings/index.php	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/settings/index.php	(date 1644985017591)
+@@ -41,7 +41,7 @@
+         echo "</div>";
+ 
+         if ($_Session["username"] == null) {
+-            echo "<form method='POST' action='login.php'>";
++            echo "<form method='POST' action='../settings/login.php'>";
+             echo "<input type='hidden' name='username'>";
+             echo "<label for='username'>Username</label>";
+             echo "<input type='text' id='username' name='username'>";
+Index: .idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<dataSource name=\"journal@localhost\">\n  <database-model serializer=\"dbm\" dbms=\"MYSQL\" family-id=\"MYSQL\" format-version=\"4.32\">\n    <root id=\"1\">\n      <DefaultCasing>exact</DefaultCasing>\n      <DefaultEngine>InnoDB</DefaultEngine>\n      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>\n      <Grants>journal|schema||aheisleycook||ALTER|G\njournal|schema||aheisleycook||ALTER ROUTINE|G\njournal|schema||aheisleycook||CREATE|G\njournal|schema||aheisleycook||CREATE ROUTINE|G\njournal|schema||aheisleycook||CREATE TEMPORARY TABLES|G\njournal|schema||aheisleycook||CREATE VIEW|G\njournal|schema||aheisleycook||DELETE|G\njournal|schema||aheisleycook||DROP|G\njournal|schema||aheisleycook||EVENT|G\njournal|schema||aheisleycook||EXECUTE|G\njournal|schema||aheisleycook||INDEX|G\njournal|schema||aheisleycook||INSERT|G\njournal|schema||aheisleycook||LOCK TABLES|G\njournal|schema||aheisleycook||REFERENCES|G\njournal|schema||aheisleycook||SELECT|G\njournal|schema||aheisleycook||SHOW VIEW|G\njournal|schema||aheisleycook||TRIGGER|G\njournal|schema||aheisleycook||UPDATE|G</Grants>\n      <ServerVersion>8.0.27</ServerVersion>\n    </root>\n    <collation id=\"2\" parent=\"1\" name=\"armscii8_general_ci\">\n      <Charset>armscii8</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"3\" parent=\"1\" name=\"armscii8_bin\">\n      <Charset>armscii8</Charset>\n    </collation>\n    <collation id=\"4\" parent=\"1\" name=\"ascii_general_ci\">\n      <Charset>ascii</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"5\" parent=\"1\" name=\"ascii_bin\">\n      <Charset>ascii</Charset>\n    </collation>\n    <collation id=\"6\" parent=\"1\" name=\"big5_chinese_ci\">\n      <Charset>big5</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"7\" parent=\"1\" name=\"big5_bin\">\n      <Charset>big5</Charset>\n    </collation>\n    <collation id=\"8\" parent=\"1\" name=\"binary\">\n      <Charset>binary</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"9\" parent=\"1\" name=\"cp1250_general_ci\">\n      <Charset>cp1250</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"10\" parent=\"1\" name=\"cp1250_czech_cs\">\n      <Charset>cp1250</Charset>\n    </collation>\n    <collation id=\"11\" parent=\"1\" name=\"cp1250_croatian_ci\">\n      <Charset>cp1250</Charset>\n    </collation>\n    <collation id=\"12\" parent=\"1\" name=\"cp1250_bin\">\n      <Charset>cp1250</Charset>\n    </collation>\n    <collation id=\"13\" parent=\"1\" name=\"cp1250_polish_ci\">\n      <Charset>cp1250</Charset>\n    </collation>\n    <collation id=\"14\" parent=\"1\" name=\"cp1251_bulgarian_ci\">\n      <Charset>cp1251</Charset>\n    </collation>\n    <collation id=\"15\" parent=\"1\" name=\"cp1251_ukrainian_ci\">\n      <Charset>cp1251</Charset>\n    </collation>\n    <collation id=\"16\" parent=\"1\" name=\"cp1251_bin\">\n      <Charset>cp1251</Charset>\n    </collation>\n    <collation id=\"17\" parent=\"1\" name=\"cp1251_general_ci\">\n      <Charset>cp1251</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"18\" parent=\"1\" name=\"cp1251_general_cs\">\n      <Charset>cp1251</Charset>\n    </collation>\n    <collation id=\"19\" parent=\"1\" name=\"cp1256_general_ci\">\n      <Charset>cp1256</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"20\" parent=\"1\" name=\"cp1256_bin\">\n      <Charset>cp1256</Charset>\n    </collation>\n    <collation id=\"21\" parent=\"1\" name=\"cp1257_lithuanian_ci\">\n      <Charset>cp1257</Charset>\n    </collation>\n    <collation id=\"22\" parent=\"1\" name=\"cp1257_bin\">\n      <Charset>cp1257</Charset>\n    </collation>\n    <collation id=\"23\" parent=\"1\" name=\"cp1257_general_ci\">\n      <Charset>cp1257</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"24\" parent=\"1\" name=\"cp850_general_ci\">\n      <Charset>cp850</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"25\" parent=\"1\" name=\"cp850_bin\">\n      <Charset>cp850</Charset>\n    </collation>\n    <collation id=\"26\" parent=\"1\" name=\"cp852_general_ci\">\n      <Charset>cp852</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"27\" parent=\"1\" name=\"cp852_bin\">\n      <Charset>cp852</Charset>\n    </collation>\n    <collation id=\"28\" parent=\"1\" name=\"cp866_general_ci\">\n      <Charset>cp866</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"29\" parent=\"1\" name=\"cp866_bin\">\n      <Charset>cp866</Charset>\n    </collation>\n    <collation id=\"30\" parent=\"1\" name=\"cp932_japanese_ci\">\n      <Charset>cp932</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"31\" parent=\"1\" name=\"cp932_bin\">\n      <Charset>cp932</Charset>\n    </collation>\n    <collation id=\"32\" parent=\"1\" name=\"dec8_swedish_ci\">\n      <Charset>dec8</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"33\" parent=\"1\" name=\"dec8_bin\">\n      <Charset>dec8</Charset>\n    </collation>\n    <collation id=\"34\" parent=\"1\" name=\"eucjpms_japanese_ci\">\n      <Charset>eucjpms</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"35\" parent=\"1\" name=\"eucjpms_bin\">\n      <Charset>eucjpms</Charset>\n    </collation>\n    <collation id=\"36\" parent=\"1\" name=\"euckr_korean_ci\">\n      <Charset>euckr</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"37\" parent=\"1\" name=\"euckr_bin\">\n      <Charset>euckr</Charset>\n    </collation>\n    <collation id=\"38\" parent=\"1\" name=\"gb18030_chinese_ci\">\n      <Charset>gb18030</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"39\" parent=\"1\" name=\"gb18030_bin\">\n      <Charset>gb18030</Charset>\n    </collation>\n    <collation id=\"40\" parent=\"1\" name=\"gb18030_unicode_520_ci\">\n      <Charset>gb18030</Charset>\n    </collation>\n    <collation id=\"41\" parent=\"1\" name=\"gb2312_chinese_ci\">\n      <Charset>gb2312</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"42\" parent=\"1\" name=\"gb2312_bin\">\n      <Charset>gb2312</Charset>\n    </collation>\n    <collation id=\"43\" parent=\"1\" name=\"gbk_chinese_ci\">\n      <Charset>gbk</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"44\" parent=\"1\" name=\"gbk_bin\">\n      <Charset>gbk</Charset>\n    </collation>\n    <collation id=\"45\" parent=\"1\" name=\"geostd8_general_ci\">\n      <Charset>geostd8</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"46\" parent=\"1\" name=\"geostd8_bin\">\n      <Charset>geostd8</Charset>\n    </collation>\n    <collation id=\"47\" parent=\"1\" name=\"greek_general_ci\">\n      <Charset>greek</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"48\" parent=\"1\" name=\"greek_bin\">\n      <Charset>greek</Charset>\n    </collation>\n    <collation id=\"49\" parent=\"1\" name=\"hebrew_general_ci\">\n      <Charset>hebrew</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"50\" parent=\"1\" name=\"hebrew_bin\">\n      <Charset>hebrew</Charset>\n    </collation>\n    <collation id=\"51\" parent=\"1\" name=\"hp8_english_ci\">\n      <Charset>hp8</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"52\" parent=\"1\" name=\"hp8_bin\">\n      <Charset>hp8</Charset>\n    </collation>\n    <collation id=\"53\" parent=\"1\" name=\"keybcs2_general_ci\">\n      <Charset>keybcs2</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"54\" parent=\"1\" name=\"keybcs2_bin\">\n      <Charset>keybcs2</Charset>\n    </collation>\n    <collation id=\"55\" parent=\"1\" name=\"koi8r_general_ci\">\n      <Charset>koi8r</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"56\" parent=\"1\" name=\"koi8r_bin\">\n      <Charset>koi8r</Charset>\n    </collation>\n    <collation id=\"57\" parent=\"1\" name=\"koi8u_general_ci\">\n      <Charset>koi8u</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"58\" parent=\"1\" name=\"koi8u_bin\">\n      <Charset>koi8u</Charset>\n    </collation>\n    <collation id=\"59\" parent=\"1\" name=\"latin1_german1_ci\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"60\" parent=\"1\" name=\"latin1_swedish_ci\">\n      <Charset>latin1</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"61\" parent=\"1\" name=\"latin1_danish_ci\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"62\" parent=\"1\" name=\"latin1_german2_ci\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"63\" parent=\"1\" name=\"latin1_bin\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"64\" parent=\"1\" name=\"latin1_general_ci\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"65\" parent=\"1\" name=\"latin1_general_cs\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"66\" parent=\"1\" name=\"latin1_spanish_ci\">\n      <Charset>latin1</Charset>\n    </collation>\n    <collation id=\"67\" parent=\"1\" name=\"latin2_czech_cs\">\n      <Charset>latin2</Charset>\n    </collation>\n    <collation id=\"68\" parent=\"1\" name=\"latin2_general_ci\">\n      <Charset>latin2</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"69\" parent=\"1\" name=\"latin2_hungarian_ci\">\n      <Charset>latin2</Charset>\n    </collation>\n    <collation id=\"70\" parent=\"1\" name=\"latin2_croatian_ci\">\n      <Charset>latin2</Charset>\n    </collation>\n    <collation id=\"71\" parent=\"1\" name=\"latin2_bin\">\n      <Charset>latin2</Charset>\n    </collation>\n    <collation id=\"72\" parent=\"1\" name=\"latin5_turkish_ci\">\n      <Charset>latin5</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"73\" parent=\"1\" name=\"latin5_bin\">\n      <Charset>latin5</Charset>\n    </collation>\n    <collation id=\"74\" parent=\"1\" name=\"latin7_estonian_cs\">\n      <Charset>latin7</Charset>\n    </collation>\n    <collation id=\"75\" parent=\"1\" name=\"latin7_general_ci\">\n      <Charset>latin7</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"76\" parent=\"1\" name=\"latin7_general_cs\">\n      <Charset>latin7</Charset>\n    </collation>\n    <collation id=\"77\" parent=\"1\" name=\"latin7_bin\">\n      <Charset>latin7</Charset>\n    </collation>\n    <collation id=\"78\" parent=\"1\" name=\"macce_general_ci\">\n      <Charset>macce</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"79\" parent=\"1\" name=\"macce_bin\">\n      <Charset>macce</Charset>\n    </collation>\n    <collation id=\"80\" parent=\"1\" name=\"macroman_general_ci\">\n      <Charset>macroman</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"81\" parent=\"1\" name=\"macroman_bin\">\n      <Charset>macroman</Charset>\n    </collation>\n    <collation id=\"82\" parent=\"1\" name=\"sjis_japanese_ci\">\n      <Charset>sjis</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"83\" parent=\"1\" name=\"sjis_bin\">\n      <Charset>sjis</Charset>\n    </collation>\n    <collation id=\"84\" parent=\"1\" name=\"swe7_swedish_ci\">\n      <Charset>swe7</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"85\" parent=\"1\" name=\"swe7_bin\">\n      <Charset>swe7</Charset>\n    </collation>\n    <collation id=\"86\" parent=\"1\" name=\"tis620_thai_ci\">\n      <Charset>tis620</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"87\" parent=\"1\" name=\"tis620_bin\">\n      <Charset>tis620</Charset>\n    </collation>\n    <collation id=\"88\" parent=\"1\" name=\"ucs2_general_ci\">\n      <Charset>ucs2</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"89\" parent=\"1\" name=\"ucs2_bin\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"90\" parent=\"1\" name=\"ucs2_unicode_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"91\" parent=\"1\" name=\"ucs2_icelandic_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"92\" parent=\"1\" name=\"ucs2_latvian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"93\" parent=\"1\" name=\"ucs2_romanian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"94\" parent=\"1\" name=\"ucs2_slovenian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"95\" parent=\"1\" name=\"ucs2_polish_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"96\" parent=\"1\" name=\"ucs2_estonian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"97\" parent=\"1\" name=\"ucs2_spanish_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"98\" parent=\"1\" name=\"ucs2_swedish_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"99\" parent=\"1\" name=\"ucs2_turkish_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"100\" parent=\"1\" name=\"ucs2_czech_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"101\" parent=\"1\" name=\"ucs2_danish_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"102\" parent=\"1\" name=\"ucs2_lithuanian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"103\" parent=\"1\" name=\"ucs2_slovak_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"104\" parent=\"1\" name=\"ucs2_spanish2_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"105\" parent=\"1\" name=\"ucs2_roman_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"106\" parent=\"1\" name=\"ucs2_persian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"107\" parent=\"1\" name=\"ucs2_esperanto_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"108\" parent=\"1\" name=\"ucs2_hungarian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"109\" parent=\"1\" name=\"ucs2_sinhala_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"110\" parent=\"1\" name=\"ucs2_german2_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"111\" parent=\"1\" name=\"ucs2_croatian_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"112\" parent=\"1\" name=\"ucs2_unicode_520_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"113\" parent=\"1\" name=\"ucs2_vietnamese_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"114\" parent=\"1\" name=\"ucs2_general_mysql500_ci\">\n      <Charset>ucs2</Charset>\n    </collation>\n    <collation id=\"115\" parent=\"1\" name=\"ujis_japanese_ci\">\n      <Charset>ujis</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"116\" parent=\"1\" name=\"ujis_bin\">\n      <Charset>ujis</Charset>\n    </collation>\n    <collation id=\"117\" parent=\"1\" name=\"utf16_general_ci\">\n      <Charset>utf16</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"118\" parent=\"1\" name=\"utf16_bin\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"119\" parent=\"1\" name=\"utf16_unicode_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"120\" parent=\"1\" name=\"utf16_icelandic_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"121\" parent=\"1\" name=\"utf16_latvian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"122\" parent=\"1\" name=\"utf16_romanian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"123\" parent=\"1\" name=\"utf16_slovenian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"124\" parent=\"1\" name=\"utf16_polish_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"125\" parent=\"1\" name=\"utf16_estonian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"126\" parent=\"1\" name=\"utf16_spanish_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"127\" parent=\"1\" name=\"utf16_swedish_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"128\" parent=\"1\" name=\"utf16_turkish_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"129\" parent=\"1\" name=\"utf16_czech_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"130\" parent=\"1\" name=\"utf16_danish_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"131\" parent=\"1\" name=\"utf16_lithuanian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"132\" parent=\"1\" name=\"utf16_slovak_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"133\" parent=\"1\" name=\"utf16_spanish2_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"134\" parent=\"1\" name=\"utf16_roman_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"135\" parent=\"1\" name=\"utf16_persian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"136\" parent=\"1\" name=\"utf16_esperanto_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"137\" parent=\"1\" name=\"utf16_hungarian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"138\" parent=\"1\" name=\"utf16_sinhala_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"139\" parent=\"1\" name=\"utf16_german2_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"140\" parent=\"1\" name=\"utf16_croatian_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"141\" parent=\"1\" name=\"utf16_unicode_520_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"142\" parent=\"1\" name=\"utf16_vietnamese_ci\">\n      <Charset>utf16</Charset>\n    </collation>\n    <collation id=\"143\" parent=\"1\" name=\"utf16le_general_ci\">\n      <Charset>utf16le</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"144\" parent=\"1\" name=\"utf16le_bin\">\n      <Charset>utf16le</Charset>\n    </collation>\n    <collation id=\"145\" parent=\"1\" name=\"utf32_general_ci\">\n      <Charset>utf32</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"146\" parent=\"1\" name=\"utf32_bin\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"147\" parent=\"1\" name=\"utf32_unicode_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"148\" parent=\"1\" name=\"utf32_icelandic_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"149\" parent=\"1\" name=\"utf32_latvian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"150\" parent=\"1\" name=\"utf32_romanian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"151\" parent=\"1\" name=\"utf32_slovenian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"152\" parent=\"1\" name=\"utf32_polish_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"153\" parent=\"1\" name=\"utf32_estonian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"154\" parent=\"1\" name=\"utf32_spanish_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"155\" parent=\"1\" name=\"utf32_swedish_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"156\" parent=\"1\" name=\"utf32_turkish_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"157\" parent=\"1\" name=\"utf32_czech_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"158\" parent=\"1\" name=\"utf32_danish_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"159\" parent=\"1\" name=\"utf32_lithuanian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"160\" parent=\"1\" name=\"utf32_slovak_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"161\" parent=\"1\" name=\"utf32_spanish2_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"162\" parent=\"1\" name=\"utf32_roman_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"163\" parent=\"1\" name=\"utf32_persian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"164\" parent=\"1\" name=\"utf32_esperanto_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"165\" parent=\"1\" name=\"utf32_hungarian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"166\" parent=\"1\" name=\"utf32_sinhala_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"167\" parent=\"1\" name=\"utf32_german2_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"168\" parent=\"1\" name=\"utf32_croatian_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"169\" parent=\"1\" name=\"utf32_unicode_520_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"170\" parent=\"1\" name=\"utf32_vietnamese_ci\">\n      <Charset>utf32</Charset>\n    </collation>\n    <collation id=\"171\" parent=\"1\" name=\"utf8_general_ci\">\n      <Charset>utf8</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"172\" parent=\"1\" name=\"utf8_tolower_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"173\" parent=\"1\" name=\"utf8_bin\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"174\" parent=\"1\" name=\"utf8_unicode_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"175\" parent=\"1\" name=\"utf8_icelandic_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"176\" parent=\"1\" name=\"utf8_latvian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"177\" parent=\"1\" name=\"utf8_romanian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"178\" parent=\"1\" name=\"utf8_slovenian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"179\" parent=\"1\" name=\"utf8_polish_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"180\" parent=\"1\" name=\"utf8_estonian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"181\" parent=\"1\" name=\"utf8_spanish_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"182\" parent=\"1\" name=\"utf8_swedish_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"183\" parent=\"1\" name=\"utf8_turkish_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"184\" parent=\"1\" name=\"utf8_czech_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"185\" parent=\"1\" name=\"utf8_danish_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"186\" parent=\"1\" name=\"utf8_lithuanian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"187\" parent=\"1\" name=\"utf8_slovak_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"188\" parent=\"1\" name=\"utf8_spanish2_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"189\" parent=\"1\" name=\"utf8_roman_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"190\" parent=\"1\" name=\"utf8_persian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"191\" parent=\"1\" name=\"utf8_esperanto_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"192\" parent=\"1\" name=\"utf8_hungarian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"193\" parent=\"1\" name=\"utf8_sinhala_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"194\" parent=\"1\" name=\"utf8_german2_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"195\" parent=\"1\" name=\"utf8_croatian_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"196\" parent=\"1\" name=\"utf8_unicode_520_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"197\" parent=\"1\" name=\"utf8_vietnamese_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"198\" parent=\"1\" name=\"utf8_general_mysql500_ci\">\n      <Charset>utf8</Charset>\n    </collation>\n    <collation id=\"199\" parent=\"1\" name=\"utf8mb4_general_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"200\" parent=\"1\" name=\"utf8mb4_bin\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"201\" parent=\"1\" name=\"utf8mb4_unicode_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"202\" parent=\"1\" name=\"utf8mb4_icelandic_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"203\" parent=\"1\" name=\"utf8mb4_latvian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"204\" parent=\"1\" name=\"utf8mb4_romanian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"205\" parent=\"1\" name=\"utf8mb4_slovenian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"206\" parent=\"1\" name=\"utf8mb4_polish_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"207\" parent=\"1\" name=\"utf8mb4_estonian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"208\" parent=\"1\" name=\"utf8mb4_spanish_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"209\" parent=\"1\" name=\"utf8mb4_swedish_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"210\" parent=\"1\" name=\"utf8mb4_turkish_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"211\" parent=\"1\" name=\"utf8mb4_czech_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"212\" parent=\"1\" name=\"utf8mb4_danish_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"213\" parent=\"1\" name=\"utf8mb4_lithuanian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"214\" parent=\"1\" name=\"utf8mb4_slovak_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"215\" parent=\"1\" name=\"utf8mb4_spanish2_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"216\" parent=\"1\" name=\"utf8mb4_roman_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"217\" parent=\"1\" name=\"utf8mb4_persian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"218\" parent=\"1\" name=\"utf8mb4_esperanto_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"219\" parent=\"1\" name=\"utf8mb4_hungarian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"220\" parent=\"1\" name=\"utf8mb4_sinhala_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"221\" parent=\"1\" name=\"utf8mb4_german2_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"222\" parent=\"1\" name=\"utf8mb4_croatian_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"223\" parent=\"1\" name=\"utf8mb4_unicode_520_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"224\" parent=\"1\" name=\"utf8mb4_vietnamese_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"225\" parent=\"1\" name=\"utf8mb4_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n      <DefaultForCharset>1</DefaultForCharset>\n    </collation>\n    <collation id=\"226\" parent=\"1\" name=\"utf8mb4_de_pb_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"227\" parent=\"1\" name=\"utf8mb4_is_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"228\" parent=\"1\" name=\"utf8mb4_lv_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"229\" parent=\"1\" name=\"utf8mb4_ro_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"230\" parent=\"1\" name=\"utf8mb4_sl_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"231\" parent=\"1\" name=\"utf8mb4_pl_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"232\" parent=\"1\" name=\"utf8mb4_et_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"233\" parent=\"1\" name=\"utf8mb4_es_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"234\" parent=\"1\" name=\"utf8mb4_sv_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"235\" parent=\"1\" name=\"utf8mb4_tr_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"236\" parent=\"1\" name=\"utf8mb4_cs_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"237\" parent=\"1\" name=\"utf8mb4_da_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"238\" parent=\"1\" name=\"utf8mb4_lt_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"239\" parent=\"1\" name=\"utf8mb4_sk_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"240\" parent=\"1\" name=\"utf8mb4_es_trad_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"241\" parent=\"1\" name=\"utf8mb4_la_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"242\" parent=\"1\" name=\"utf8mb4_eo_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"243\" parent=\"1\" name=\"utf8mb4_hu_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"244\" parent=\"1\" name=\"utf8mb4_hr_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"245\" parent=\"1\" name=\"utf8mb4_vi_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"246\" parent=\"1\" name=\"utf8mb4_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"247\" parent=\"1\" name=\"utf8mb4_de_pb_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"248\" parent=\"1\" name=\"utf8mb4_is_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"249\" parent=\"1\" name=\"utf8mb4_lv_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"250\" parent=\"1\" name=\"utf8mb4_ro_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"251\" parent=\"1\" name=\"utf8mb4_sl_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"252\" parent=\"1\" name=\"utf8mb4_pl_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"253\" parent=\"1\" name=\"utf8mb4_et_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"254\" parent=\"1\" name=\"utf8mb4_es_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"255\" parent=\"1\" name=\"utf8mb4_sv_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"256\" parent=\"1\" name=\"utf8mb4_tr_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"257\" parent=\"1\" name=\"utf8mb4_cs_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"258\" parent=\"1\" name=\"utf8mb4_da_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"259\" parent=\"1\" name=\"utf8mb4_lt_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"260\" parent=\"1\" name=\"utf8mb4_sk_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"261\" parent=\"1\" name=\"utf8mb4_es_trad_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"262\" parent=\"1\" name=\"utf8mb4_la_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"263\" parent=\"1\" name=\"utf8mb4_eo_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"264\" parent=\"1\" name=\"utf8mb4_hu_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"265\" parent=\"1\" name=\"utf8mb4_hr_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"266\" parent=\"1\" name=\"utf8mb4_vi_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"267\" parent=\"1\" name=\"utf8mb4_ja_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"268\" parent=\"1\" name=\"utf8mb4_ja_0900_as_cs_ks\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"269\" parent=\"1\" name=\"utf8mb4_0900_as_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"270\" parent=\"1\" name=\"utf8mb4_ru_0900_ai_ci\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"271\" parent=\"1\" name=\"utf8mb4_ru_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"272\" parent=\"1\" name=\"utf8mb4_zh_0900_as_cs\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <collation id=\"273\" parent=\"1\" name=\"utf8mb4_0900_bin\">\n      <Charset>utf8mb4</Charset>\n    </collation>\n    <schema id=\"274\" parent=\"1\" name=\"journal\">\n      <Current>1</Current>\n      <CollationName>utf8mb4_0900_ai_ci</CollationName>\n    </schema>\n    <schema id=\"275\" parent=\"1\" name=\"information_schema\">\n      <CollationName>utf8_general_ci</CollationName>\n    </schema>\n    <user id=\"276\" parent=\"1\" name=\"aheisleycook\"/>\n    <table id=\"277\" parent=\"274\" name=\"POST\">\n      <Engine>InnoDB</Engine>\n      <CollationName>utf8mb4_0900_ai_ci</CollationName>\n    </table>\n    <table id=\"278\" parent=\"274\" name=\"POSTS\">\n      <Engine>InnoDB</Engine>\n      <CollationName>utf8mb4_0900_ai_ci</CollationName>\n    </table>\n    <table id=\"279\" parent=\"274\" name=\"USERS\">\n      <Engine>InnoDB</Engine>\n      <CollationName>utf8mb4_0900_ai_ci</CollationName>\n    </table>\n    <column id=\"280\" parent=\"277\" name=\"POST_ID\">\n      <DataType>int|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>1</Position>\n      <SequenceIdentity>null</SequenceIdentity>\n    </column>\n    <column id=\"281\" parent=\"277\" name=\"POST_TITLE\">\n      <DataType>varchar(90)|0s</DataType>\n      <Position>2</Position>\n    </column>\n    <column id=\"282\" parent=\"277\" name=\"POST_DESC\">\n      <DataType>varchar(300)|0s</DataType>\n      <Position>3</Position>\n    </column>\n    <key id=\"283\" parent=\"277\" name=\"PRIMARY\">\n      <ColNames>POST_ID</ColNames>\n      <NameSurrogate>1</NameSurrogate>\n      <Primary>1</Primary>\n    </key>\n    <column id=\"284\" parent=\"278\" name=\"POSTS_TITLE\">\n      <DataType>varchar(30)|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>1</Position>\n    </column>\n    <column id=\"285\" parent=\"278\" name=\"POSTS_DESCRIPTION\">\n      <DataType>varchar(130)|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>2</Position>\n    </column>\n    <column id=\"286\" parent=\"278\" name=\"POSTS_TAG\">\n      <DataType>varchar(100)|0s</DataType>\n      <Position>3</Position>\n    </column>\n    <column id=\"287\" parent=\"279\" name=\"USERS_ID\">\n      <DataType>int|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>1</Position>\n      <SequenceIdentity>null</SequenceIdentity>\n    </column>\n    <column id=\"288\" parent=\"279\" name=\"USERS_EMAIL\">\n      <DataType>varchar(30)|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>2</Position>\n    </column>\n    <column id=\"289\" parent=\"279\" name=\"USERS_PASSWORD\">\n      <DataType>varchar(90)|0s</DataType>\n      <NotNull>1</NotNull>\n      <Position>3</Position>\n    </column>\n    <index id=\"290\" parent=\"279\" name=\"USERS_EMAIL\">\n      <ColNames>USERS_EMAIL</ColNames>\n      <Type>btree</Type>\n      <Unique>1</Unique>\n    </index>\n    <key id=\"291\" parent=\"279\" name=\"PRIMARY\">\n      <ColNames>USERS_ID</ColNames>\n      <NameSurrogate>1</NameSurrogate>\n      <Primary>1</Primary>\n    </key>\n    <key id=\"292\" parent=\"279\" name=\"USERS_EMAIL\">\n      <ColNames>USERS_EMAIL</ColNames>\n      <UnderlyingIndexName>USERS_EMAIL</UnderlyingIndexName>\n    </key>\n  </database-model>\n</dataSource>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml b/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml
+--- a/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml	(date 1645117666539)
+@@ -23,947 +23,956 @@
+ journal|schema||aheisleycook||SHOW VIEW|G
+ journal|schema||aheisleycook||TRIGGER|G
+ journal|schema||aheisleycook||UPDATE|G</Grants>
+-      <ServerVersion>8.0.27</ServerVersion>
++      <ServerVersion>8.0.28</ServerVersion>
+     </root>
+-    <collation id="2" parent="1" name="armscii8_general_ci">
++    <collation id="2" parent="1" name="armscii8_bin">
+       <Charset>armscii8</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="3" parent="1" name="armscii8_bin">
++    <collation id="3" parent="1" name="armscii8_general_ci">
+       <Charset>armscii8</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="4" parent="1" name="ascii_general_ci">
++    <collation id="4" parent="1" name="ascii_bin">
+       <Charset>ascii</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="5" parent="1" name="ascii_bin">
++    <collation id="5" parent="1" name="ascii_general_ci">
+       <Charset>ascii</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="6" parent="1" name="big5_chinese_ci">
++    <collation id="6" parent="1" name="big5_bin">
+       <Charset>big5</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="7" parent="1" name="big5_bin">
++    <collation id="7" parent="1" name="big5_chinese_ci">
+       <Charset>big5</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+     <collation id="8" parent="1" name="binary">
+       <Charset>binary</Charset>
+       <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="9" parent="1" name="cp1250_general_ci">
++    <collation id="9" parent="1" name="cp1250_bin">
+       <Charset>cp1250</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="10" parent="1" name="cp1250_czech_cs">
++    <collation id="10" parent="1" name="cp1250_croatian_ci">
+       <Charset>cp1250</Charset>
+     </collation>
+-    <collation id="11" parent="1" name="cp1250_croatian_ci">
++    <collation id="11" parent="1" name="cp1250_czech_cs">
+       <Charset>cp1250</Charset>
+     </collation>
+-    <collation id="12" parent="1" name="cp1250_bin">
++    <collation id="12" parent="1" name="cp1250_general_ci">
+       <Charset>cp1250</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+     <collation id="13" parent="1" name="cp1250_polish_ci">
+       <Charset>cp1250</Charset>
+     </collation>
+-    <collation id="14" parent="1" name="cp1251_bulgarian_ci">
++    <collation id="14" parent="1" name="cp1251_bin">
+       <Charset>cp1251</Charset>
+     </collation>
+-    <collation id="15" parent="1" name="cp1251_ukrainian_ci">
++    <collation id="15" parent="1" name="cp1251_bulgarian_ci">
+       <Charset>cp1251</Charset>
+     </collation>
+-    <collation id="16" parent="1" name="cp1251_bin">
++    <collation id="16" parent="1" name="cp1251_general_ci">
+       <Charset>cp1251</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="17" parent="1" name="cp1251_general_ci">
++    <collation id="17" parent="1" name="cp1251_general_cs">
+       <Charset>cp1251</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="18" parent="1" name="cp1251_general_cs">
++    <collation id="18" parent="1" name="cp1251_ukrainian_ci">
+       <Charset>cp1251</Charset>
+     </collation>
+-    <collation id="19" parent="1" name="cp1256_general_ci">
++    <collation id="19" parent="1" name="cp1256_bin">
+       <Charset>cp1256</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="20" parent="1" name="cp1256_bin">
++    <collation id="20" parent="1" name="cp1256_general_ci">
+       <Charset>cp1256</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="21" parent="1" name="cp1257_lithuanian_ci">
++    <collation id="21" parent="1" name="cp1257_bin">
+       <Charset>cp1257</Charset>
+     </collation>
+-    <collation id="22" parent="1" name="cp1257_bin">
++    <collation id="22" parent="1" name="cp1257_general_ci">
+       <Charset>cp1257</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="23" parent="1" name="cp1257_general_ci">
++    <collation id="23" parent="1" name="cp1257_lithuanian_ci">
+       <Charset>cp1257</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="24" parent="1" name="cp850_general_ci">
++    <collation id="24" parent="1" name="cp850_bin">
+       <Charset>cp850</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="25" parent="1" name="cp850_bin">
++    <collation id="25" parent="1" name="cp850_general_ci">
+       <Charset>cp850</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="26" parent="1" name="cp852_general_ci">
++    <collation id="26" parent="1" name="cp852_bin">
+       <Charset>cp852</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="27" parent="1" name="cp852_bin">
++    <collation id="27" parent="1" name="cp852_general_ci">
+       <Charset>cp852</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="28" parent="1" name="cp866_general_ci">
++    <collation id="28" parent="1" name="cp866_bin">
+       <Charset>cp866</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="29" parent="1" name="cp866_bin">
++    <collation id="29" parent="1" name="cp866_general_ci">
+       <Charset>cp866</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="30" parent="1" name="cp932_japanese_ci">
++    <collation id="30" parent="1" name="cp932_bin">
+       <Charset>cp932</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="31" parent="1" name="cp932_bin">
++    <collation id="31" parent="1" name="cp932_japanese_ci">
+       <Charset>cp932</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="32" parent="1" name="dec8_swedish_ci">
++    <collation id="32" parent="1" name="dec8_bin">
+       <Charset>dec8</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="33" parent="1" name="dec8_bin">
++    <collation id="33" parent="1" name="dec8_swedish_ci">
+       <Charset>dec8</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="34" parent="1" name="eucjpms_japanese_ci">
++    <collation id="34" parent="1" name="eucjpms_bin">
+       <Charset>eucjpms</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="35" parent="1" name="eucjpms_bin">
++    <collation id="35" parent="1" name="eucjpms_japanese_ci">
+       <Charset>eucjpms</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="36" parent="1" name="euckr_korean_ci">
++    <collation id="36" parent="1" name="euckr_bin">
+       <Charset>euckr</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="37" parent="1" name="euckr_bin">
++    <collation id="37" parent="1" name="euckr_korean_ci">
+       <Charset>euckr</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="38" parent="1" name="gb18030_chinese_ci">
++    <collation id="38" parent="1" name="gb18030_bin">
+       <Charset>gb18030</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="39" parent="1" name="gb18030_bin">
++    <collation id="39" parent="1" name="gb18030_chinese_ci">
+       <Charset>gb18030</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+     <collation id="40" parent="1" name="gb18030_unicode_520_ci">
+       <Charset>gb18030</Charset>
+     </collation>
+-    <collation id="41" parent="1" name="gb2312_chinese_ci">
++    <collation id="41" parent="1" name="gb2312_bin">
+       <Charset>gb2312</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="42" parent="1" name="gb2312_bin">
++    <collation id="42" parent="1" name="gb2312_chinese_ci">
+       <Charset>gb2312</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="43" parent="1" name="gbk_chinese_ci">
++    <collation id="43" parent="1" name="gbk_bin">
+       <Charset>gbk</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="44" parent="1" name="gbk_bin">
++    <collation id="44" parent="1" name="gbk_chinese_ci">
+       <Charset>gbk</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="45" parent="1" name="geostd8_general_ci">
++    <collation id="45" parent="1" name="geostd8_bin">
+       <Charset>geostd8</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="46" parent="1" name="geostd8_bin">
++    <collation id="46" parent="1" name="geostd8_general_ci">
+       <Charset>geostd8</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="47" parent="1" name="greek_general_ci">
++    <collation id="47" parent="1" name="greek_bin">
+       <Charset>greek</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="48" parent="1" name="greek_bin">
++    <collation id="48" parent="1" name="greek_general_ci">
+       <Charset>greek</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="49" parent="1" name="hebrew_general_ci">
++    <collation id="49" parent="1" name="hebrew_bin">
+       <Charset>hebrew</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="50" parent="1" name="hebrew_bin">
++    <collation id="50" parent="1" name="hebrew_general_ci">
+       <Charset>hebrew</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="51" parent="1" name="hp8_english_ci">
++    <collation id="51" parent="1" name="hp8_bin">
+       <Charset>hp8</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="52" parent="1" name="hp8_bin">
++    <collation id="52" parent="1" name="hp8_english_ci">
+       <Charset>hp8</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="53" parent="1" name="keybcs2_general_ci">
++    <collation id="53" parent="1" name="keybcs2_bin">
+       <Charset>keybcs2</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="54" parent="1" name="keybcs2_bin">
++    <collation id="54" parent="1" name="keybcs2_general_ci">
+       <Charset>keybcs2</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="55" parent="1" name="koi8r_general_ci">
++    <collation id="55" parent="1" name="koi8r_bin">
+       <Charset>koi8r</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="56" parent="1" name="koi8r_bin">
++    <collation id="56" parent="1" name="koi8r_general_ci">
+       <Charset>koi8r</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="57" parent="1" name="koi8u_general_ci">
++    <collation id="57" parent="1" name="koi8u_bin">
+       <Charset>koi8u</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="58" parent="1" name="koi8u_bin">
++    <collation id="58" parent="1" name="koi8u_general_ci">
+       <Charset>koi8u</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="59" parent="1" name="latin1_german1_ci">
++    <collation id="59" parent="1" name="latin1_bin">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="60" parent="1" name="latin1_swedish_ci">
++    <collation id="60" parent="1" name="latin1_danish_ci">
+       <Charset>latin1</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="61" parent="1" name="latin1_danish_ci">
++    <collation id="61" parent="1" name="latin1_general_ci">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="62" parent="1" name="latin1_german2_ci">
++    <collation id="62" parent="1" name="latin1_general_cs">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="63" parent="1" name="latin1_bin">
++    <collation id="63" parent="1" name="latin1_german1_ci">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="64" parent="1" name="latin1_general_ci">
++    <collation id="64" parent="1" name="latin1_german2_ci">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="65" parent="1" name="latin1_general_cs">
++    <collation id="65" parent="1" name="latin1_spanish_ci">
+       <Charset>latin1</Charset>
+     </collation>
+-    <collation id="66" parent="1" name="latin1_spanish_ci">
++    <collation id="66" parent="1" name="latin1_swedish_ci">
+       <Charset>latin1</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="67" parent="1" name="latin2_czech_cs">
++    <collation id="67" parent="1" name="latin2_bin">
+       <Charset>latin2</Charset>
+     </collation>
+-    <collation id="68" parent="1" name="latin2_general_ci">
++    <collation id="68" parent="1" name="latin2_croatian_ci">
+       <Charset>latin2</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="69" parent="1" name="latin2_hungarian_ci">
++    <collation id="69" parent="1" name="latin2_czech_cs">
+       <Charset>latin2</Charset>
+     </collation>
+-    <collation id="70" parent="1" name="latin2_croatian_ci">
++    <collation id="70" parent="1" name="latin2_general_ci">
+       <Charset>latin2</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="71" parent="1" name="latin2_bin">
++    <collation id="71" parent="1" name="latin2_hungarian_ci">
+       <Charset>latin2</Charset>
+     </collation>
+-    <collation id="72" parent="1" name="latin5_turkish_ci">
++    <collation id="72" parent="1" name="latin5_bin">
+       <Charset>latin5</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="73" parent="1" name="latin5_bin">
++    <collation id="73" parent="1" name="latin5_turkish_ci">
+       <Charset>latin5</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="74" parent="1" name="latin7_estonian_cs">
++    <collation id="74" parent="1" name="latin7_bin">
+       <Charset>latin7</Charset>
+     </collation>
+-    <collation id="75" parent="1" name="latin7_general_ci">
++    <collation id="75" parent="1" name="latin7_estonian_cs">
+       <Charset>latin7</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="76" parent="1" name="latin7_general_cs">
++    <collation id="76" parent="1" name="latin7_general_ci">
+       <Charset>latin7</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="77" parent="1" name="latin7_bin">
++    <collation id="77" parent="1" name="latin7_general_cs">
+       <Charset>latin7</Charset>
+     </collation>
+-    <collation id="78" parent="1" name="macce_general_ci">
++    <collation id="78" parent="1" name="macce_bin">
+       <Charset>macce</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="79" parent="1" name="macce_bin">
++    <collation id="79" parent="1" name="macce_general_ci">
+       <Charset>macce</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="80" parent="1" name="macroman_general_ci">
++    <collation id="80" parent="1" name="macroman_bin">
+       <Charset>macroman</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="81" parent="1" name="macroman_bin">
++    <collation id="81" parent="1" name="macroman_general_ci">
+       <Charset>macroman</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="82" parent="1" name="sjis_japanese_ci">
++    <collation id="82" parent="1" name="sjis_bin">
+       <Charset>sjis</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="83" parent="1" name="sjis_bin">
++    <collation id="83" parent="1" name="sjis_japanese_ci">
+       <Charset>sjis</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="84" parent="1" name="swe7_swedish_ci">
++    <collation id="84" parent="1" name="swe7_bin">
+       <Charset>swe7</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="85" parent="1" name="swe7_bin">
++    <collation id="85" parent="1" name="swe7_swedish_ci">
+       <Charset>swe7</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="86" parent="1" name="tis620_thai_ci">
++    <collation id="86" parent="1" name="tis620_bin">
+       <Charset>tis620</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="87" parent="1" name="tis620_bin">
++    <collation id="87" parent="1" name="tis620_thai_ci">
+       <Charset>tis620</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="88" parent="1" name="ucs2_general_ci">
++    <collation id="88" parent="1" name="ucs2_bin">
+       <Charset>ucs2</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="89" parent="1" name="ucs2_bin">
++    <collation id="89" parent="1" name="ucs2_croatian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="90" parent="1" name="ucs2_unicode_ci">
++    <collation id="90" parent="1" name="ucs2_czech_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="91" parent="1" name="ucs2_icelandic_ci">
++    <collation id="91" parent="1" name="ucs2_danish_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="92" parent="1" name="ucs2_latvian_ci">
++    <collation id="92" parent="1" name="ucs2_esperanto_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="93" parent="1" name="ucs2_romanian_ci">
++    <collation id="93" parent="1" name="ucs2_estonian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="94" parent="1" name="ucs2_slovenian_ci">
++    <collation id="94" parent="1" name="ucs2_general_ci">
+       <Charset>ucs2</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="95" parent="1" name="ucs2_polish_ci">
++    <collation id="95" parent="1" name="ucs2_general_mysql500_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="96" parent="1" name="ucs2_estonian_ci">
++    <collation id="96" parent="1" name="ucs2_german2_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="97" parent="1" name="ucs2_spanish_ci">
++    <collation id="97" parent="1" name="ucs2_hungarian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="98" parent="1" name="ucs2_swedish_ci">
++    <collation id="98" parent="1" name="ucs2_icelandic_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="99" parent="1" name="ucs2_turkish_ci">
++    <collation id="99" parent="1" name="ucs2_latvian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="100" parent="1" name="ucs2_czech_ci">
++    <collation id="100" parent="1" name="ucs2_lithuanian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="101" parent="1" name="ucs2_danish_ci">
++    <collation id="101" parent="1" name="ucs2_persian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="102" parent="1" name="ucs2_lithuanian_ci">
++    <collation id="102" parent="1" name="ucs2_polish_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="103" parent="1" name="ucs2_slovak_ci">
++    <collation id="103" parent="1" name="ucs2_roman_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="104" parent="1" name="ucs2_spanish2_ci">
++    <collation id="104" parent="1" name="ucs2_romanian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="105" parent="1" name="ucs2_roman_ci">
++    <collation id="105" parent="1" name="ucs2_sinhala_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="106" parent="1" name="ucs2_persian_ci">
++    <collation id="106" parent="1" name="ucs2_slovak_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="107" parent="1" name="ucs2_esperanto_ci">
++    <collation id="107" parent="1" name="ucs2_slovenian_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="108" parent="1" name="ucs2_hungarian_ci">
++    <collation id="108" parent="1" name="ucs2_spanish2_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="109" parent="1" name="ucs2_sinhala_ci">
++    <collation id="109" parent="1" name="ucs2_spanish_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="110" parent="1" name="ucs2_german2_ci">
++    <collation id="110" parent="1" name="ucs2_swedish_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="111" parent="1" name="ucs2_croatian_ci">
++    <collation id="111" parent="1" name="ucs2_turkish_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+     <collation id="112" parent="1" name="ucs2_unicode_520_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="113" parent="1" name="ucs2_vietnamese_ci">
++    <collation id="113" parent="1" name="ucs2_unicode_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="114" parent="1" name="ucs2_general_mysql500_ci">
++    <collation id="114" parent="1" name="ucs2_vietnamese_ci">
+       <Charset>ucs2</Charset>
+     </collation>
+-    <collation id="115" parent="1" name="ujis_japanese_ci">
++    <collation id="115" parent="1" name="ujis_bin">
+       <Charset>ujis</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="116" parent="1" name="ujis_bin">
++    <collation id="116" parent="1" name="ujis_japanese_ci">
+       <Charset>ujis</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="117" parent="1" name="utf16_general_ci">
++    <collation id="117" parent="1" name="utf16_bin">
+       <Charset>utf16</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="118" parent="1" name="utf16_bin">
++    <collation id="118" parent="1" name="utf16_croatian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="119" parent="1" name="utf16_unicode_ci">
++    <collation id="119" parent="1" name="utf16_czech_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="120" parent="1" name="utf16_icelandic_ci">
++    <collation id="120" parent="1" name="utf16_danish_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="121" parent="1" name="utf16_latvian_ci">
++    <collation id="121" parent="1" name="utf16_esperanto_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="122" parent="1" name="utf16_romanian_ci">
++    <collation id="122" parent="1" name="utf16_estonian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="123" parent="1" name="utf16_slovenian_ci">
++    <collation id="123" parent="1" name="utf16_general_ci">
+       <Charset>utf16</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="124" parent="1" name="utf16_polish_ci">
++    <collation id="124" parent="1" name="utf16_german2_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="125" parent="1" name="utf16_estonian_ci">
++    <collation id="125" parent="1" name="utf16_hungarian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="126" parent="1" name="utf16_spanish_ci">
++    <collation id="126" parent="1" name="utf16_icelandic_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="127" parent="1" name="utf16_swedish_ci">
++    <collation id="127" parent="1" name="utf16_latvian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="128" parent="1" name="utf16_turkish_ci">
++    <collation id="128" parent="1" name="utf16_lithuanian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="129" parent="1" name="utf16_czech_ci">
++    <collation id="129" parent="1" name="utf16_persian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="130" parent="1" name="utf16_danish_ci">
++    <collation id="130" parent="1" name="utf16_polish_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="131" parent="1" name="utf16_lithuanian_ci">
++    <collation id="131" parent="1" name="utf16_roman_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="132" parent="1" name="utf16_slovak_ci">
++    <collation id="132" parent="1" name="utf16_romanian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="133" parent="1" name="utf16_spanish2_ci">
++    <collation id="133" parent="1" name="utf16_sinhala_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="134" parent="1" name="utf16_roman_ci">
++    <collation id="134" parent="1" name="utf16_slovak_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="135" parent="1" name="utf16_persian_ci">
++    <collation id="135" parent="1" name="utf16_slovenian_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="136" parent="1" name="utf16_esperanto_ci">
++    <collation id="136" parent="1" name="utf16_spanish2_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="137" parent="1" name="utf16_hungarian_ci">
++    <collation id="137" parent="1" name="utf16_spanish_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="138" parent="1" name="utf16_sinhala_ci">
++    <collation id="138" parent="1" name="utf16_swedish_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="139" parent="1" name="utf16_german2_ci">
++    <collation id="139" parent="1" name="utf16_turkish_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="140" parent="1" name="utf16_croatian_ci">
++    <collation id="140" parent="1" name="utf16_unicode_520_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="141" parent="1" name="utf16_unicode_520_ci">
++    <collation id="141" parent="1" name="utf16_unicode_ci">
+       <Charset>utf16</Charset>
+     </collation>
+     <collation id="142" parent="1" name="utf16_vietnamese_ci">
+       <Charset>utf16</Charset>
+     </collation>
+-    <collation id="143" parent="1" name="utf16le_general_ci">
++    <collation id="143" parent="1" name="utf16le_bin">
+       <Charset>utf16le</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="144" parent="1" name="utf16le_bin">
++    <collation id="144" parent="1" name="utf16le_general_ci">
+       <Charset>utf16le</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="145" parent="1" name="utf32_general_ci">
++    <collation id="145" parent="1" name="utf32_bin">
+       <Charset>utf32</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="146" parent="1" name="utf32_bin">
++    <collation id="146" parent="1" name="utf32_croatian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="147" parent="1" name="utf32_unicode_ci">
++    <collation id="147" parent="1" name="utf32_czech_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="148" parent="1" name="utf32_icelandic_ci">
++    <collation id="148" parent="1" name="utf32_danish_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="149" parent="1" name="utf32_latvian_ci">
++    <collation id="149" parent="1" name="utf32_esperanto_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="150" parent="1" name="utf32_romanian_ci">
++    <collation id="150" parent="1" name="utf32_estonian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="151" parent="1" name="utf32_slovenian_ci">
++    <collation id="151" parent="1" name="utf32_general_ci">
+       <Charset>utf32</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="152" parent="1" name="utf32_polish_ci">
++    <collation id="152" parent="1" name="utf32_german2_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="153" parent="1" name="utf32_estonian_ci">
++    <collation id="153" parent="1" name="utf32_hungarian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="154" parent="1" name="utf32_spanish_ci">
++    <collation id="154" parent="1" name="utf32_icelandic_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="155" parent="1" name="utf32_swedish_ci">
++    <collation id="155" parent="1" name="utf32_latvian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="156" parent="1" name="utf32_turkish_ci">
++    <collation id="156" parent="1" name="utf32_lithuanian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="157" parent="1" name="utf32_czech_ci">
++    <collation id="157" parent="1" name="utf32_persian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="158" parent="1" name="utf32_danish_ci">
++    <collation id="158" parent="1" name="utf32_polish_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="159" parent="1" name="utf32_lithuanian_ci">
++    <collation id="159" parent="1" name="utf32_roman_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="160" parent="1" name="utf32_slovak_ci">
++    <collation id="160" parent="1" name="utf32_romanian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="161" parent="1" name="utf32_spanish2_ci">
++    <collation id="161" parent="1" name="utf32_sinhala_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="162" parent="1" name="utf32_roman_ci">
++    <collation id="162" parent="1" name="utf32_slovak_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="163" parent="1" name="utf32_persian_ci">
++    <collation id="163" parent="1" name="utf32_slovenian_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="164" parent="1" name="utf32_esperanto_ci">
++    <collation id="164" parent="1" name="utf32_spanish2_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="165" parent="1" name="utf32_hungarian_ci">
++    <collation id="165" parent="1" name="utf32_spanish_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="166" parent="1" name="utf32_sinhala_ci">
++    <collation id="166" parent="1" name="utf32_swedish_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="167" parent="1" name="utf32_german2_ci">
++    <collation id="167" parent="1" name="utf32_turkish_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="168" parent="1" name="utf32_croatian_ci">
++    <collation id="168" parent="1" name="utf32_unicode_520_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="169" parent="1" name="utf32_unicode_520_ci">
++    <collation id="169" parent="1" name="utf32_unicode_ci">
+       <Charset>utf32</Charset>
+     </collation>
+     <collation id="170" parent="1" name="utf32_vietnamese_ci">
+       <Charset>utf32</Charset>
+     </collation>
+-    <collation id="171" parent="1" name="utf8_general_ci">
++    <collation id="171" parent="1" name="utf8_bin">
+       <Charset>utf8</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="172" parent="1" name="utf8_tolower_ci">
++    <collation id="172" parent="1" name="utf8_croatian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="173" parent="1" name="utf8_bin">
++    <collation id="173" parent="1" name="utf8_czech_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="174" parent="1" name="utf8_unicode_ci">
++    <collation id="174" parent="1" name="utf8_danish_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="175" parent="1" name="utf8_icelandic_ci">
++    <collation id="175" parent="1" name="utf8_esperanto_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="176" parent="1" name="utf8_latvian_ci">
++    <collation id="176" parent="1" name="utf8_estonian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="177" parent="1" name="utf8_romanian_ci">
++    <collation id="177" parent="1" name="utf8_general_ci">
+       <Charset>utf8</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="178" parent="1" name="utf8_slovenian_ci">
++    <collation id="178" parent="1" name="utf8_general_mysql500_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="179" parent="1" name="utf8_polish_ci">
++    <collation id="179" parent="1" name="utf8_german2_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="180" parent="1" name="utf8_estonian_ci">
++    <collation id="180" parent="1" name="utf8_hungarian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="181" parent="1" name="utf8_spanish_ci">
++    <collation id="181" parent="1" name="utf8_icelandic_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="182" parent="1" name="utf8_swedish_ci">
++    <collation id="182" parent="1" name="utf8_latvian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="183" parent="1" name="utf8_turkish_ci">
++    <collation id="183" parent="1" name="utf8_lithuanian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="184" parent="1" name="utf8_czech_ci">
++    <collation id="184" parent="1" name="utf8_persian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="185" parent="1" name="utf8_danish_ci">
++    <collation id="185" parent="1" name="utf8_polish_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="186" parent="1" name="utf8_lithuanian_ci">
++    <collation id="186" parent="1" name="utf8_roman_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="187" parent="1" name="utf8_slovak_ci">
++    <collation id="187" parent="1" name="utf8_romanian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="188" parent="1" name="utf8_spanish2_ci">
++    <collation id="188" parent="1" name="utf8_sinhala_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="189" parent="1" name="utf8_roman_ci">
++    <collation id="189" parent="1" name="utf8_slovak_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="190" parent="1" name="utf8_persian_ci">
++    <collation id="190" parent="1" name="utf8_slovenian_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="191" parent="1" name="utf8_esperanto_ci">
++    <collation id="191" parent="1" name="utf8_spanish2_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="192" parent="1" name="utf8_hungarian_ci">
++    <collation id="192" parent="1" name="utf8_spanish_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="193" parent="1" name="utf8_sinhala_ci">
++    <collation id="193" parent="1" name="utf8_swedish_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="194" parent="1" name="utf8_german2_ci">
++    <collation id="194" parent="1" name="utf8_tolower_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="195" parent="1" name="utf8_croatian_ci">
++    <collation id="195" parent="1" name="utf8_turkish_ci">
+       <Charset>utf8</Charset>
+     </collation>
+     <collation id="196" parent="1" name="utf8_unicode_520_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="197" parent="1" name="utf8_vietnamese_ci">
++    <collation id="197" parent="1" name="utf8_unicode_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="198" parent="1" name="utf8_general_mysql500_ci">
++    <collation id="198" parent="1" name="utf8_vietnamese_ci">
+       <Charset>utf8</Charset>
+     </collation>
+-    <collation id="199" parent="1" name="utf8mb4_general_ci">
++    <collation id="199" parent="1" name="utf8mb4_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
++      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="200" parent="1" name="utf8mb4_bin">
++    <collation id="200" parent="1" name="utf8mb4_0900_as_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="201" parent="1" name="utf8mb4_unicode_ci">
++    <collation id="201" parent="1" name="utf8mb4_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="202" parent="1" name="utf8mb4_icelandic_ci">
++    <collation id="202" parent="1" name="utf8mb4_0900_bin">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="203" parent="1" name="utf8mb4_latvian_ci">
++    <collation id="203" parent="1" name="utf8mb4_bin">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="204" parent="1" name="utf8mb4_romanian_ci">
++    <collation id="204" parent="1" name="utf8mb4_croatian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="205" parent="1" name="utf8mb4_slovenian_ci">
++    <collation id="205" parent="1" name="utf8mb4_cs_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="206" parent="1" name="utf8mb4_polish_ci">
++    <collation id="206" parent="1" name="utf8mb4_cs_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="207" parent="1" name="utf8mb4_estonian_ci">
++    <collation id="207" parent="1" name="utf8mb4_czech_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="208" parent="1" name="utf8mb4_spanish_ci">
++    <collation id="208" parent="1" name="utf8mb4_da_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="209" parent="1" name="utf8mb4_swedish_ci">
++    <collation id="209" parent="1" name="utf8mb4_da_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="210" parent="1" name="utf8mb4_turkish_ci">
++    <collation id="210" parent="1" name="utf8mb4_danish_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="211" parent="1" name="utf8mb4_czech_ci">
++    <collation id="211" parent="1" name="utf8mb4_de_pb_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="212" parent="1" name="utf8mb4_danish_ci">
++    <collation id="212" parent="1" name="utf8mb4_de_pb_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="213" parent="1" name="utf8mb4_lithuanian_ci">
++    <collation id="213" parent="1" name="utf8mb4_eo_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="214" parent="1" name="utf8mb4_slovak_ci">
++    <collation id="214" parent="1" name="utf8mb4_eo_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="215" parent="1" name="utf8mb4_spanish2_ci">
++    <collation id="215" parent="1" name="utf8mb4_es_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="216" parent="1" name="utf8mb4_roman_ci">
++    <collation id="216" parent="1" name="utf8mb4_es_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="217" parent="1" name="utf8mb4_persian_ci">
++    <collation id="217" parent="1" name="utf8mb4_es_trad_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="218" parent="1" name="utf8mb4_esperanto_ci">
++    <collation id="218" parent="1" name="utf8mb4_es_trad_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="219" parent="1" name="utf8mb4_hungarian_ci">
++    <collation id="219" parent="1" name="utf8mb4_esperanto_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="220" parent="1" name="utf8mb4_sinhala_ci">
++    <collation id="220" parent="1" name="utf8mb4_estonian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="221" parent="1" name="utf8mb4_german2_ci">
++    <collation id="221" parent="1" name="utf8mb4_et_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="222" parent="1" name="utf8mb4_croatian_ci">
++    <collation id="222" parent="1" name="utf8mb4_et_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="223" parent="1" name="utf8mb4_unicode_520_ci">
++    <collation id="223" parent="1" name="utf8mb4_general_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="224" parent="1" name="utf8mb4_vietnamese_ci">
++    <collation id="224" parent="1" name="utf8mb4_german2_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="225" parent="1" name="utf8mb4_0900_ai_ci">
++    <collation id="225" parent="1" name="utf8mb4_hr_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+-      <DefaultForCharset>1</DefaultForCharset>
+     </collation>
+-    <collation id="226" parent="1" name="utf8mb4_de_pb_0900_ai_ci">
++    <collation id="226" parent="1" name="utf8mb4_hr_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="227" parent="1" name="utf8mb4_is_0900_ai_ci">
++    <collation id="227" parent="1" name="utf8mb4_hu_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="228" parent="1" name="utf8mb4_lv_0900_ai_ci">
++    <collation id="228" parent="1" name="utf8mb4_hu_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="229" parent="1" name="utf8mb4_ro_0900_ai_ci">
++    <collation id="229" parent="1" name="utf8mb4_hungarian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="230" parent="1" name="utf8mb4_sl_0900_ai_ci">
++    <collation id="230" parent="1" name="utf8mb4_icelandic_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="231" parent="1" name="utf8mb4_pl_0900_ai_ci">
++    <collation id="231" parent="1" name="utf8mb4_is_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="232" parent="1" name="utf8mb4_et_0900_ai_ci">
++    <collation id="232" parent="1" name="utf8mb4_is_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="233" parent="1" name="utf8mb4_es_0900_ai_ci">
++    <collation id="233" parent="1" name="utf8mb4_ja_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="234" parent="1" name="utf8mb4_sv_0900_ai_ci">
++    <collation id="234" parent="1" name="utf8mb4_ja_0900_as_cs_ks">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="235" parent="1" name="utf8mb4_tr_0900_ai_ci">
++    <collation id="235" parent="1" name="utf8mb4_la_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="236" parent="1" name="utf8mb4_cs_0900_ai_ci">
++    <collation id="236" parent="1" name="utf8mb4_la_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="237" parent="1" name="utf8mb4_da_0900_ai_ci">
++    <collation id="237" parent="1" name="utf8mb4_latvian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="238" parent="1" name="utf8mb4_lt_0900_ai_ci">
++    <collation id="238" parent="1" name="utf8mb4_lithuanian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="239" parent="1" name="utf8mb4_sk_0900_ai_ci">
++    <collation id="239" parent="1" name="utf8mb4_lt_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="240" parent="1" name="utf8mb4_es_trad_0900_ai_ci">
++    <collation id="240" parent="1" name="utf8mb4_lt_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="241" parent="1" name="utf8mb4_la_0900_ai_ci">
++    <collation id="241" parent="1" name="utf8mb4_lv_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="242" parent="1" name="utf8mb4_eo_0900_ai_ci">
++    <collation id="242" parent="1" name="utf8mb4_lv_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="243" parent="1" name="utf8mb4_hu_0900_ai_ci">
++    <collation id="243" parent="1" name="utf8mb4_persian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="244" parent="1" name="utf8mb4_hr_0900_ai_ci">
++    <collation id="244" parent="1" name="utf8mb4_pl_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="245" parent="1" name="utf8mb4_vi_0900_ai_ci">
++    <collation id="245" parent="1" name="utf8mb4_pl_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="246" parent="1" name="utf8mb4_0900_as_cs">
++    <collation id="246" parent="1" name="utf8mb4_polish_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="247" parent="1" name="utf8mb4_de_pb_0900_as_cs">
++    <collation id="247" parent="1" name="utf8mb4_ro_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="248" parent="1" name="utf8mb4_is_0900_as_cs">
++    <collation id="248" parent="1" name="utf8mb4_ro_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="249" parent="1" name="utf8mb4_lv_0900_as_cs">
++    <collation id="249" parent="1" name="utf8mb4_roman_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="250" parent="1" name="utf8mb4_ro_0900_as_cs">
++    <collation id="250" parent="1" name="utf8mb4_romanian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="251" parent="1" name="utf8mb4_sl_0900_as_cs">
++    <collation id="251" parent="1" name="utf8mb4_ru_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="252" parent="1" name="utf8mb4_pl_0900_as_cs">
++    <collation id="252" parent="1" name="utf8mb4_ru_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="253" parent="1" name="utf8mb4_et_0900_as_cs">
++    <collation id="253" parent="1" name="utf8mb4_sinhala_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="254" parent="1" name="utf8mb4_es_0900_as_cs">
++    <collation id="254" parent="1" name="utf8mb4_sk_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="255" parent="1" name="utf8mb4_sv_0900_as_cs">
++    <collation id="255" parent="1" name="utf8mb4_sk_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="256" parent="1" name="utf8mb4_tr_0900_as_cs">
++    <collation id="256" parent="1" name="utf8mb4_sl_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="257" parent="1" name="utf8mb4_cs_0900_as_cs">
++    <collation id="257" parent="1" name="utf8mb4_sl_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="258" parent="1" name="utf8mb4_da_0900_as_cs">
++    <collation id="258" parent="1" name="utf8mb4_slovak_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="259" parent="1" name="utf8mb4_lt_0900_as_cs">
++    <collation id="259" parent="1" name="utf8mb4_slovenian_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="260" parent="1" name="utf8mb4_sk_0900_as_cs">
++    <collation id="260" parent="1" name="utf8mb4_spanish2_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="261" parent="1" name="utf8mb4_es_trad_0900_as_cs">
++    <collation id="261" parent="1" name="utf8mb4_spanish_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="262" parent="1" name="utf8mb4_la_0900_as_cs">
++    <collation id="262" parent="1" name="utf8mb4_sv_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="263" parent="1" name="utf8mb4_eo_0900_as_cs">
++    <collation id="263" parent="1" name="utf8mb4_sv_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="264" parent="1" name="utf8mb4_hu_0900_as_cs">
++    <collation id="264" parent="1" name="utf8mb4_swedish_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="265" parent="1" name="utf8mb4_hr_0900_as_cs">
++    <collation id="265" parent="1" name="utf8mb4_tr_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="266" parent="1" name="utf8mb4_vi_0900_as_cs">
++    <collation id="266" parent="1" name="utf8mb4_tr_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="267" parent="1" name="utf8mb4_ja_0900_as_cs">
++    <collation id="267" parent="1" name="utf8mb4_turkish_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="268" parent="1" name="utf8mb4_ja_0900_as_cs_ks">
++    <collation id="268" parent="1" name="utf8mb4_unicode_520_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="269" parent="1" name="utf8mb4_0900_as_ci">
++    <collation id="269" parent="1" name="utf8mb4_unicode_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="270" parent="1" name="utf8mb4_ru_0900_ai_ci">
++    <collation id="270" parent="1" name="utf8mb4_vi_0900_ai_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="271" parent="1" name="utf8mb4_ru_0900_as_cs">
++    <collation id="271" parent="1" name="utf8mb4_vi_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="272" parent="1" name="utf8mb4_zh_0900_as_cs">
++    <collation id="272" parent="1" name="utf8mb4_vietnamese_ci">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <collation id="273" parent="1" name="utf8mb4_0900_bin">
++    <collation id="273" parent="1" name="utf8mb4_zh_0900_as_cs">
+       <Charset>utf8mb4</Charset>
+     </collation>
+-    <schema id="274" parent="1" name="journal">
++    <schema id="274" parent="1" name="information_schema">
++      <CollationName>utf8_general_ci</CollationName>
++    </schema>
++    <schema id="275" parent="1" name="journal">
+       <Current>1</Current>
+       <CollationName>utf8mb4_0900_ai_ci</CollationName>
+-    </schema>
+-    <schema id="275" parent="1" name="information_schema">
+-      <CollationName>utf8_general_ci</CollationName>
+     </schema>
+     <user id="276" parent="1" name="aheisleycook"/>
+-    <table id="277" parent="274" name="POST">
++    <table id="277" parent="275" name="POST">
+       <Engine>InnoDB</Engine>
+       <CollationName>utf8mb4_0900_ai_ci</CollationName>
+     </table>
+-    <table id="278" parent="274" name="POSTS">
++    <table id="278" parent="275" name="POSTS">
+       <Engine>InnoDB</Engine>
+       <CollationName>utf8mb4_0900_ai_ci</CollationName>
+     </table>
+-    <table id="279" parent="274" name="USERS">
++    <table id="279" parent="275" name="USERS">
+       <Engine>InnoDB</Engine>
+       <CollationName>utf8mb4_0900_ai_ci</CollationName>
+     </table>
+-    <column id="280" parent="277" name="POST_ID">
++    <table id="280" parent="275" name="settings">
++      <Engine>InnoDB</Engine>
++      <CollationName>utf8mb4_0900_ai_ci</CollationName>
++    </table>
++    <column id="281" parent="277" name="POST_ID">
+       <DataType>int|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>1</Position>
+       <SequenceIdentity>null</SequenceIdentity>
+     </column>
+-    <column id="281" parent="277" name="POST_TITLE">
++    <column id="282" parent="277" name="POST_TITLE">
+       <DataType>varchar(90)|0s</DataType>
+       <Position>2</Position>
+     </column>
+-    <column id="282" parent="277" name="POST_DESC">
++    <column id="283" parent="277" name="POST_DESC">
+       <DataType>varchar(300)|0s</DataType>
+       <Position>3</Position>
+     </column>
+-    <key id="283" parent="277" name="PRIMARY">
++    <key id="284" parent="277" name="PRIMARY">
+       <ColNames>POST_ID</ColNames>
+       <NameSurrogate>1</NameSurrogate>
+       <Primary>1</Primary>
+     </key>
+-    <column id="284" parent="278" name="POSTS_TITLE">
++    <column id="285" parent="278" name="POSTS_TITLE">
+       <DataType>varchar(30)|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>1</Position>
+     </column>
+-    <column id="285" parent="278" name="POSTS_DESCRIPTION">
++    <column id="286" parent="278" name="POSTS_DESCRIPTION">
+       <DataType>varchar(130)|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>2</Position>
+     </column>
+-    <column id="286" parent="278" name="POSTS_TAG">
++    <column id="287" parent="278" name="POSTS_TAG">
+       <DataType>varchar(100)|0s</DataType>
+       <Position>3</Position>
+     </column>
+-    <column id="287" parent="279" name="USERS_ID">
++    <column id="288" parent="279" name="USERS_ID">
+       <DataType>int|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>1</Position>
+       <SequenceIdentity>null</SequenceIdentity>
+     </column>
+-    <column id="288" parent="279" name="USERS_EMAIL">
++    <column id="289" parent="279" name="USERS_EMAIL">
+       <DataType>varchar(30)|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>2</Position>
+     </column>
+-    <column id="289" parent="279" name="USERS_PASSWORD">
++    <column id="290" parent="279" name="USERS_PASSWORD">
+       <DataType>varchar(90)|0s</DataType>
+       <NotNull>1</NotNull>
+       <Position>3</Position>
+     </column>
+-    <index id="290" parent="279" name="USERS_EMAIL">
++    <index id="291" parent="279" name="USERS_EMAIL">
+       <ColNames>USERS_EMAIL</ColNames>
+       <Type>btree</Type>
+       <Unique>1</Unique>
+     </index>
+-    <key id="291" parent="279" name="PRIMARY">
++    <key id="292" parent="279" name="PRIMARY">
+       <ColNames>USERS_ID</ColNames>
+       <NameSurrogate>1</NameSurrogate>
+       <Primary>1</Primary>
+     </key>
+-    <key id="292" parent="279" name="USERS_EMAIL">
++    <key id="293" parent="279" name="USERS_EMAIL">
+       <ColNames>USERS_EMAIL</ColNames>
+       <UnderlyingIndexName>USERS_EMAIL</UnderlyingIndexName>
+     </key>
++    <column id="294" parent="280" name="themes">
++      <DataType>varchar(30)|0s</DataType>
++      <DefaultExpression>&apos;light&apos;</DefaultExpression>
++      <Position>1</Position>
++    </column>
+   </database-model>
+ </dataSource>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"98676be4-a923-47c1-a362-e6b938aa2fac\" name=\"Changes\" comment=\"added changes\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/about/index.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/about/index.php\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/log.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/log.txt\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/settings/index.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/settings/index.php\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\">\n    <execution />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"JavaScript File\" />\n        <option value=\"CSS File\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"PHP 8.1\">\n    <include_path>\n      <path value=\"$PROJECT_DIR$\" />\n    </include_path>\n  </component>\n  <component name=\"ProjectId\" id=\"24NiCG2EmfesamP7mbDbmDeAcTx\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"DatabaseDriversLRU\" value=\"sqlite&#10;mysql\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"database.data.extractors.current.export.id\" value=\"Comma-separated (CSV)_id\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/main/index.php\" />\n    <property name=\"list.type.of.created.stylesheet\" value=\"CSS\" />\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"project.propVCSSupport.DirectoryMappings\" />\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\n  </component>\n  <component name=\"RunManager\" selected=\"PHP Built-in Web Server.Unnamed\">\n    <configuration name=\"users.sql\" type=\"DatabaseScript\" editBeforeRun=\"true\" temporary=\"true\" nameIsGenerated=\"true\">\n      <script-file value=\"$PROJECT_DIR$/data/users.sql\" />\n      <script-mode>FILE</script-mode>\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"journak\" type=\"PHPUnitRunConfigurationType\" factoryName=\"PHPUnit\" temporary=\"true\">\n      <CommandLine>\n        <PhpTestInterpreterSettings>\n          <option name=\"interpreterName\" value=\"PHP 8.1\" />\n        </PhpTestInterpreterSettings>\n      </CommandLine>\n      <TestRunner directory=\"$PROJECT_DIR$/journak\" />\n      <method v=\"2\" />\n    </configuration>\n    <list>\n      <item itemvalue=\"Database Script.users.sql\" />\n      <item itemvalue=\"PHP Built-in Web Server.Unnamed\" />\n      <item itemvalue=\"PHPUnit.journak\" />\n    </list>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"PHPUnit.journak\" />\n        <item itemvalue=\"Database Script.users.sql\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"98676be4-a923-47c1-a362-e6b938aa2fac\" name=\"Changes\" comment=\"\" />\n      <created>1643477318886</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1643477318886</updated>\n      <workItem from=\"1643477320358\" duration=\"766000\" />\n      <workItem from=\"1643852743429\" duration=\"2994000\" />\n      <workItem from=\"1644022283090\" duration=\"599000\" />\n      <workItem from=\"1644115757261\" duration=\"689000\" />\n      <workItem from=\"1644122612246\" duration=\"21000\" />\n      <workItem from=\"1644344305832\" duration=\"122000\" />\n      <workItem from=\"1644344435369\" duration=\"10658000\" />\n      <workItem from=\"1644466661521\" duration=\"1250000\" />\n      <workItem from=\"1644522860348\" duration=\"3683000\" />\n      <workItem from=\"1644540388060\" duration=\"3176000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"added\">\n      <created>1644344351524</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644344351524</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"added dark mode and light mode support\">\n      <created>1644346861582</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644346861582</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"added dark mode and light mode support\">\n      <created>1644346884542</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644346884542</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"added changes\">\n      <created>1644524794253</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644524794253</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"added changes\">\n      <created>1644525075190</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644525075190</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"added changes\">\n      <created>1644527447550</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644527447550</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"added changes\">\n      <created>1644540650783</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644540650783</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"8\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"added\" />\n    <MESSAGE value=\"added dark mode and light mode support\" />\n    <MESSAGE value=\"added changes\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"added changes\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/.idea/workspace.xml	(date 1645117424438)
+@@ -2,10 +2,14 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added changes">
++      <change afterPath="$PROJECT_DIR$/favicon.ico" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/about/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/assets/themes.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/themes.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/image0.png" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/main/index.php" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/settings/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/settings/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/login.php" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -101,6 +105,7 @@
+       <workItem from="1644466661521" duration="1250000" />
+       <workItem from="1644522860348" duration="3683000" />
+       <workItem from="1644540388060" duration="3176000" />
++      <workItem from="1645114412955" duration="600000" />
+     </task>
+     <task id="LOCAL-00001" summary="added">
+       <created>1644344351524</created>
+Index: log.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'./.git/FETCH_HEAD' -> '/var/www/html/./.git/FETCH_HEAD'\n'./.git/COMMIT_EDITMSG' -> '/var/www/html/./.git/COMMIT_EDITMSG'\n'./.git/config' -> '/var/www/html/./.git/config'\n'./.git/index' -> '/var/www/html/./.git/index'\n'./.git/description' -> '/var/www/html/./.git/description'\n'./.git/hooks/pre-rebase.sample' -> '/var/www/html/./.git/hooks/pre-rebase.sample'\n'./.git/hooks/post-update.sample' -> '/var/www/html/./.git/hooks/post-update.sample'\n'./.git/hooks/pre-push.sample' -> '/var/www/html/./.git/hooks/pre-push.sample'\n'./.git/hooks/pre-receive.sample' -> '/var/www/html/./.git/hooks/pre-receive.sample'\n'./.git/hooks/prepare-commit-msg.sample' -> '/var/www/html/./.git/hooks/prepare-commit-msg.sample'\n'./.git/hooks/pre-commit.sample' -> '/var/www/html/./.git/hooks/pre-commit.sample'\n'./.git/hooks/pre-applypatch.sample' -> '/var/www/html/./.git/hooks/pre-applypatch.sample'\n'./.git/hooks/commit-msg.sample' -> '/var/www/html/./.git/hooks/commit-msg.sample'\n'./.git/hooks/update.sample' -> '/var/www/html/./.git/hooks/update.sample'\n'./.git/hooks/applypatch-msg.sample' -> '/var/www/html/./.git/hooks/applypatch-msg.sample'\n'./.git/hooks/fsmonitor-watchman.sample' -> '/var/www/html/./.git/hooks/fsmonitor-watchman.sample'\n'./.git/hooks/pre-merge-commit.sample' -> '/var/www/html/./.git/hooks/pre-merge-commit.sample'\n'./.git/info/exclude' -> '/var/www/html/./.git/info/exclude'\n'./.git/refs/heads/master' -> '/var/www/html/./.git/refs/heads/master'\n'./.git/refs/remotes/scijournal/master' -> '/var/www/html/./.git/refs/remotes/scijournal/master'\n'./.git/HEAD' -> '/var/www/html/./.git/HEAD'\n'./.git/objects/c9/56989b29ad0767edc6cf3a202545927c3d1e76' -> '/var/www/html/./.git/objects/c9/56989b29ad0767edc6cf3a202545927c3d1e76'\n'./.git/objects/de/64e85d213a3c07eb49faab26172589c536e0e3' -> '/var/www/html/./.git/objects/de/64e85d213a3c07eb49faab26172589c536e0e3'\n'./.git/objects/4c/85e085d6c79de0da5803ee385ef8af27111324' -> '/var/www/html/./.git/objects/4c/85e085d6c79de0da5803ee385ef8af27111324'\n'./.git/objects/20/0fd070fa7058d33861c1f72708117447393c42' -> '/var/www/html/./.git/objects/20/0fd070fa7058d33861c1f72708117447393c42'\n'./.git/objects/3e/21cbd49650757f9302c5b49cea6dd31d06aeef' -> '/var/www/html/./.git/objects/3e/21cbd49650757f9302c5b49cea6dd31d06aeef'\n'./.git/objects/3e/f543b3f1e91bfd678343fc402b1d40e41063c9' -> '/var/www/html/./.git/objects/3e/f543b3f1e91bfd678343fc402b1d40e41063c9'\n'./.git/objects/3e/834c8d39688423ac99ff94ccd11d1885141920' -> '/var/www/html/./.git/objects/3e/834c8d39688423ac99ff94ccd11d1885141920'\n'./.git/objects/2e/c48263f8afbabffa90c91b49f2caf5427e00fe' -> '/var/www/html/./.git/objects/2e/c48263f8afbabffa90c91b49f2caf5427e00fe'\n'./.git/objects/98/dea556a996b9d9b0f81a9b662174f1d1705908' -> '/var/www/html/./.git/objects/98/dea556a996b9d9b0f81a9b662174f1d1705908'\n'./.git/objects/98/0a47a48da9238d8ab84a65c17a8703d24667a6' -> '/var/www/html/./.git/objects/98/0a47a48da9238d8ab84a65c17a8703d24667a6'\n'./.git/objects/0f/655116c120af8dfafb9db15b8c3449f9f5de4e' -> '/var/www/html/./.git/objects/0f/655116c120af8dfafb9db15b8c3449f9f5de4e'\n'./.git/objects/9d/fefc6f25d24b90114f7f9932100610e580784d' -> '/var/www/html/./.git/objects/9d/fefc6f25d24b90114f7f9932100610e580784d'\n'./.git/objects/9d/241f22b15437995d646c5114c5c4e7ee2a1490' -> '/var/www/html/./.git/objects/9d/241f22b15437995d646c5114c5c4e7ee2a1490'\n'./.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391' -> '/var/www/html/./.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391'\n'./.git/objects/52/0b10132b14b3a8908c5749dbcfacaa723342ce' -> '/var/www/html/./.git/objects/52/0b10132b14b3a8908c5749dbcfacaa723342ce'\n'./.git/objects/52/f27f54fc05891764de154914daed38591b345e' -> '/var/www/html/./.git/objects/52/f27f54fc05891764de154914daed38591b345e'\n'./.git/objects/70/1f49b5edd80b0475fe414ab8c58b46cb3b5258' -> '/var/www/html/./.git/objects/70/1f49b5edd80b0475fe414ab8c58b46cb3b5258'\n'./.git/objects/79/732d9d6c040293055a3a1d419cd9e1d7de0238' -> '/var/www/html/./.git/objects/79/732d9d6c040293055a3a1d419cd9e1d7de0238'\n'./.git/objects/1b/3467682e9ea4336508666fb4007da9d2013bc7' -> '/var/www/html/./.git/objects/1b/3467682e9ea4336508666fb4007da9d2013bc7'\n'./.git/objects/8d/ceb30cd08421de9c7624c5a4e9b3a68b901a54' -> '/var/www/html/./.git/objects/8d/ceb30cd08421de9c7624c5a4e9b3a68b901a54'\n'./.git/objects/31/5e7939c317bf071e90794819b1be37aed77bed' -> '/var/www/html/./.git/objects/31/5e7939c317bf071e90794819b1be37aed77bed'\n'./.git/objects/31/dccaa61a33420853404608aabd12d443677d4a' -> '/var/www/html/./.git/objects/31/dccaa61a33420853404608aabd12d443677d4a'\n'./.git/objects/c4/1fd957878a2b034ce271e62b35966fe430bc0e' -> '/var/www/html/./.git/objects/c4/1fd957878a2b034ce271e62b35966fe430bc0e'\n'./.git/objects/58/dfa2d2cf2472de675f309172f6cbd924d12122' -> '/var/www/html/./.git/objects/58/dfa2d2cf2472de675f309172f6cbd924d12122'\n'./.git/objects/19/5af2692917bb1c4634ba56ab800ca9fa3dc73f' -> '/var/www/html/./.git/objects/19/5af2692917bb1c4634ba56ab800ca9fa3dc73f'\n'./.git/objects/19/7e6270d8e9bdd36ddad457a6588e6caaf5856b' -> '/var/www/html/./.git/objects/19/7e6270d8e9bdd36ddad457a6588e6caaf5856b'\n'./.git/objects/19/4d55820c7c83c6ba102c5959a5e23e2400b3d6' -> '/var/www/html/./.git/objects/19/4d55820c7c83c6ba102c5959a5e23e2400b3d6'\n'./.git/objects/ea/8267ca290dcec1f6a1d8d4d0e38935e5b29d9b' -> '/var/www/html/./.git/objects/ea/8267ca290dcec1f6a1d8d4d0e38935e5b29d9b'\n'./.git/objects/ea/af6f2045c0271279f5099ae1f57701fbabe101' -> '/var/www/html/./.git/objects/ea/af6f2045c0271279f5099ae1f57701fbabe101'\n'./.git/objects/c5/87a3401933faee31305557a341eedabb0fc516' -> '/var/www/html/./.git/objects/c5/87a3401933faee31305557a341eedabb0fc516'\n'./.git/objects/e3/c23a26cc65b110b501776aabb345804832e4d4' -> '/var/www/html/./.git/objects/e3/c23a26cc65b110b501776aabb345804832e4d4'\n'./.git/objects/e3/6448c653bb4bfceea87422ebcf725c530af772' -> '/var/www/html/./.git/objects/e3/6448c653bb4bfceea87422ebcf725c530af772'\n'./.git/objects/2d/b6c8384a36a2be1ee12797e106e7e9a176ee08' -> '/var/www/html/./.git/objects/2d/b6c8384a36a2be1ee12797e106e7e9a176ee08'\n'./.git/objects/2d/de08dfab5217dbab84d38cbbf4caeaf4827d5b' -> '/var/www/html/./.git/objects/2d/de08dfab5217dbab84d38cbbf4caeaf4827d5b'\n'./.git/objects/db/6775718f2996c3645e73702e078b40ba937e97' -> '/var/www/html/./.git/objects/db/6775718f2996c3645e73702e078b40ba937e97'\n'./.git/objects/db/a93c43d5f5eb596df6c6361bad0874f75d3c1e' -> '/var/www/html/./.git/objects/db/a93c43d5f5eb596df6c6361bad0874f75d3c1e'\n'./.git/objects/c2/8ad7ce61fc47d77ef02f5c5a16b3cd6ef53c3c' -> '/var/www/html/./.git/objects/c2/8ad7ce61fc47d77ef02f5c5a16b3cd6ef53c3c'\n'./.git/objects/c2/ff923b1e8ce6c53a7cec469341c17d9f59bf4e' -> '/var/www/html/./.git/objects/c2/ff923b1e8ce6c53a7cec469341c17d9f59bf4e'\n'./.git/objects/ff/950a5ef8770465e517347604470f45153e2be4' -> '/var/www/html/./.git/objects/ff/950a5ef8770465e517347604470f45153e2be4'\n'./.git/objects/8b/0ad759c3de80d2a9f077a4a8f1b856d14744d7' -> '/var/www/html/./.git/objects/8b/0ad759c3de80d2a9f077a4a8f1b856d14744d7'\n'./.git/objects/b1/d338b6e36b27ff70e105aa6fdb7e7eb7fe43ed' -> '/var/www/html/./.git/objects/b1/d338b6e36b27ff70e105aa6fdb7e7eb7fe43ed'\n'./.git/objects/b1/0f75f1d50956f04a90783ff7613cea132418a6' -> '/var/www/html/./.git/objects/b1/0f75f1d50956f04a90783ff7613cea132418a6'\n'./.git/objects/f7/aee1a910e24f4e88f7a19a6ab659e645a89c7a' -> '/var/www/html/./.git/objects/f7/aee1a910e24f4e88f7a19a6ab659e645a89c7a'\n'./.git/objects/b3/d9bbc7f3711e882119cd6b3af051245d859d04' -> '/var/www/html/./.git/objects/b3/d9bbc7f3711e882119cd6b3af051245d859d04'\n'./.git/objects/64/35c58f95c012a8af01a30daf35717a398509a3' -> '/var/www/html/./.git/objects/64/35c58f95c012a8af01a30daf35717a398509a3'\n'./.git/objects/64/9e9268409ecc12fb7f884e407d481cb7aac02a' -> '/var/www/html/./.git/objects/64/9e9268409ecc12fb7f884e407d481cb7aac02a'\n'./.git/objects/7a/c19aecfc172ea8f7e5a6d98b1b92120285287d' -> '/var/www/html/./.git/objects/7a/c19aecfc172ea8f7e5a6d98b1b92120285287d'\n'./.git/objects/7a/c69f9f02ed3774753a65e7db3a3aaf4e87bb9a' -> '/var/www/html/./.git/objects/7a/c69f9f02ed3774753a65e7db3a3aaf4e87bb9a'\n'./.git/objects/fb/3db172c066df073110f225119164a578be552c' -> '/var/www/html/./.git/objects/fb/3db172c066df073110f225119164a578be552c'\n'./.git/objects/80/99213016d00fd57accf3679591d6ab6bc18bf9' -> '/var/www/html/./.git/objects/80/99213016d00fd57accf3679591d6ab6bc18bf9'\n'./.git/objects/92/52ad6da441d3780b229a92614e4bd5cb0209cf' -> '/var/www/html/./.git/objects/92/52ad6da441d3780b229a92614e4bd5cb0209cf'\n'./.git/objects/92/16f51d227bb2a593a7906de25206e21dc9371b' -> '/var/www/html/./.git/objects/92/16f51d227bb2a593a7906de25206e21dc9371b'\n'./.git/objects/92/9f01df102a31f2172a8d0e8eec19527f2d2e44' -> '/var/www/html/./.git/objects/92/9f01df102a31f2172a8d0e8eec19527f2d2e44'\n'./.git/objects/92/dab6d586190b0f2e196072dad499c95eb26174' -> '/var/www/html/./.git/objects/92/dab6d586190b0f2e196072dad499c95eb26174'\n'./.git/objects/28/49324d65167a11cb674dc086e0fdde2b1dc613' -> '/var/www/html/./.git/objects/28/49324d65167a11cb674dc086e0fdde2b1dc613'\n'./.git/objects/40/d1d1dd2f496dd9eec47be7e543f04170f9a0d1' -> '/var/www/html/./.git/objects/40/d1d1dd2f496dd9eec47be7e543f04170f9a0d1'\n'./.git/objects/00/aab8b8d8658d9285f2710bcf5664fc6032a733' -> '/var/www/html/./.git/objects/00/aab8b8d8658d9285f2710bcf5664fc6032a733'\n'./.git/objects/a7/23f3e8204383c6073e87b6dcfd7d8ddb99ae3d' -> '/var/www/html/./.git/objects/a7/23f3e8204383c6073e87b6dcfd7d8ddb99ae3d'\n'./.git/objects/32/99d954711215a1b668e748b96f451a4327e5e3' -> '/var/www/html/./.git/objects/32/99d954711215a1b668e748b96f451a4327e5e3'\n'./.git/objects/32/8663de7938542d26ade62e35cf5f39df03a37f' -> '/var/www/html/./.git/objects/32/8663de7938542d26ade62e35cf5f39df03a37f'\n'./.git/objects/90/104979c41110d3f3cce68053f75ad8630bb735' -> '/var/www/html/./.git/objects/90/104979c41110d3f3cce68053f75ad8630bb735'\n'./.git/objects/aa/f0e35b41dac87533bdfce4d4e4f94f578dc36d' -> '/var/www/html/./.git/objects/aa/f0e35b41dac87533bdfce4d4e4f94f578dc36d'\n'./.git/objects/56/d8c8b2cb3aa7f1c4fb2f2d98d40769e6e41aca' -> '/var/www/html/./.git/objects/56/d8c8b2cb3aa7f1c4fb2f2d98d40769e6e41aca'\n'./.git/objects/f8/1975522b0ae4b57f9907e98b89401dd83e2cd3' -> '/var/www/html/./.git/objects/f8/1975522b0ae4b57f9907e98b89401dd83e2cd3'\n'./.git/objects/fc/a56fb108e160a32a7a1809312446aee9d6709c' -> '/var/www/html/./.git/objects/fc/a56fb108e160a32a7a1809312446aee9d6709c'\n'./.git/objects/46/069490650d6c71ecdfb3ab613810e64e05eb0c' -> '/var/www/html/./.git/objects/46/069490650d6c71ecdfb3ab613810e64e05eb0c'\n'./.git/objects/1d/d76ea196539936dd0ae81e3760b0071db8eb59' -> '/var/www/html/./.git/objects/1d/d76ea196539936dd0ae81e3760b0071db8eb59'\n'./.git/objects/1d/abfa2792b20f0116e32c60bde24bc6eb3eda48' -> '/var/www/html/./.git/objects/1d/abfa2792b20f0116e32c60bde24bc6eb3eda48'\n'./.git/objects/33/3b86d5d1cad7317ec23a2e6557136471bf011e' -> '/var/www/html/./.git/objects/33/3b86d5d1cad7317ec23a2e6557136471bf011e'\n'./.git/objects/bb/ce303b7d63ddb2f4f0c4c93b0ec05cb9d62603' -> '/var/www/html/./.git/objects/bb/ce303b7d63ddb2f4f0c4c93b0ec05cb9d62603'\n'./.git/objects/ae/d334539b0bce75ec4db7e2d1cd9febd149bd3b' -> '/var/www/html/./.git/objects/ae/d334539b0bce75ec4db7e2d1cd9febd149bd3b'\n'./.git/objects/5f/33fbd4fbd51fc057b756dc088983924b89cd2f' -> '/var/www/html/./.git/objects/5f/33fbd4fbd51fc057b756dc088983924b89cd2f'\n'./.git/objects/1f/f3db2ebf3a00ed58bb22e65f9d091bd1406153' -> '/var/www/html/./.git/objects/1f/f3db2ebf3a00ed58bb22e65f9d091bd1406153'\n'./.git/objects/84/cb261b79cf5faa36a9b3dc5f14ea485647b99f' -> '/var/www/html/./.git/objects/84/cb261b79cf5faa36a9b3dc5f14ea485647b99f'\n'./.git/objects/68/32fc74f820c738c9f7d8a7c48c2a3ceeb7782d' -> '/var/www/html/./.git/objects/68/32fc74f820c738c9f7d8a7c48c2a3ceeb7782d'\n'./.git/objects/eb/7f15b6b420ee57dae3f4bc70a83951e65ce519' -> '/var/www/html/./.git/objects/eb/7f15b6b420ee57dae3f4bc70a83951e65ce519'\n'./.git/objects/f0/4b358079e94362806779ab08ae1a420feef052' -> '/var/www/html/./.git/objects/f0/4b358079e94362806779ab08ae1a420feef052'\n'./.git/objects/49/29ae2f7991742e1ee4fa408de0b282241a981b' -> '/var/www/html/./.git/objects/49/29ae2f7991742e1ee4fa408de0b282241a981b'\n'./.git/objects/49/cf179ff9afeca4c59f1e427b4b9802eb19f6c3' -> '/var/www/html/./.git/objects/49/cf179ff9afeca4c59f1e427b4b9802eb19f6c3'\n'./.git/objects/16/b1f86846554a398e10ee7be38638c9e0fe4303' -> '/var/www/html/./.git/objects/16/b1f86846554a398e10ee7be38638c9e0fe4303'\n'./.git/objects/5a/28fef09ab319a17809f5c394dc87d882f71f72' -> '/var/www/html/./.git/objects/5a/28fef09ab319a17809f5c394dc87d882f71f72'\n'./.git/objects/b8/dc9e6d18edf1f6ea112dad73e29ad130e02537' -> '/var/www/html/./.git/objects/b8/dc9e6d18edf1f6ea112dad73e29ad130e02537'\n'./.git/objects/b8/cb3fdc1794b858f7fec37b4baeef2849f5f6e3' -> '/var/www/html/./.git/objects/b8/cb3fdc1794b858f7fec37b4baeef2849f5f6e3'\n'./.git/objects/1a/08848d59d54d6eb50afedf262406f6d681259b' -> '/var/www/html/./.git/objects/1a/08848d59d54d6eb50afedf262406f6d681259b'\n'./.git/objects/38/0593414ba54bb5fe93636603e0110071c31bab' -> '/var/www/html/./.git/objects/38/0593414ba54bb5fe93636603e0110071c31bab'\n'./.git/objects/c3/e79e6844341f52e833aa42c7e18eb707ac6a0c' -> '/var/www/html/./.git/objects/c3/e79e6844341f52e833aa42c7e18eb707ac6a0c'\n'./.git/objects/21/15752f35474b72d0e5ce7ff2732a701f8dceca' -> '/var/www/html/./.git/objects/21/15752f35474b72d0e5ce7ff2732a701f8dceca'\n'./.git/objects/21/729530dce8ce0d8e61451780ea8406a3287d7f' -> '/var/www/html/./.git/objects/21/729530dce8ce0d8e61451780ea8406a3287d7f'\n'./.git/objects/26/5ba6dfe2e6b4479803138d953b0a9d041745fb' -> '/var/www/html/./.git/objects/26/5ba6dfe2e6b4479803138d953b0a9d041745fb'\n'./.git/objects/27/5a05ccba1cdf204c77a2532a7687f8c407749d' -> '/var/www/html/./.git/objects/27/5a05ccba1cdf204c77a2532a7687f8c407749d'\n'./.git/objects/e4/9649bd3fc9f036ff2a3658b3ec23ccfab7a891' -> '/var/www/html/./.git/objects/e4/9649bd3fc9f036ff2a3658b3ec23ccfab7a891'\n'./.git/objects/e4/ce034b5d37a878b6525b32d30e23942fa86ac1' -> '/var/www/html/./.git/objects/e4/ce034b5d37a878b6525b32d30e23942fa86ac1'\n'./.git/objects/a1/82ef515d6f5eddb121eba6c293f07cb380c863' -> '/var/www/html/./.git/objects/a1/82ef515d6f5eddb121eba6c293f07cb380c863'\n'./.git/objects/a1/f5fa51358c08c4328713dd47503cb11832b996' -> '/var/www/html/./.git/objects/a1/f5fa51358c08c4328713dd47503cb11832b996'\n'./.git/objects/a1/4b11ee0abb10ad98500508b701bd1d969f1ec5' -> '/var/www/html/./.git/objects/a1/4b11ee0abb10ad98500508b701bd1d969f1ec5'\n'./.git/objects/6c/ac13d26433d9257fecac56e29c609c501c486f' -> '/var/www/html/./.git/objects/6c/ac13d26433d9257fecac56e29c609c501c486f'\n'./.git/objects/a8/74c6f38b760ecef90da58fd542bf8eb0461b24' -> '/var/www/html/./.git/objects/a8/74c6f38b760ecef90da58fd542bf8eb0461b24'\n'./.git/objects/ac/ef2a49552581e6ad93ebe9693111f3cffc7f27' -> '/var/www/html/./.git/objects/ac/ef2a49552581e6ad93ebe9693111f3cffc7f27'\n'./.git/objects/ac/70f5f185f2ff20e4902d8e34d8c5c2caa2e6fd' -> '/var/www/html/./.git/objects/ac/70f5f185f2ff20e4902d8e34d8c5c2caa2e6fd'\n'./.git/objects/f2/3beb08794192552f0f9a5d94bb2cc9103b4ee8' -> '/var/www/html/./.git/objects/f2/3beb08794192552f0f9a5d94bb2cc9103b4ee8'\n'./.git/objects/c8/0a4ed87e405c7dae721cabd033f9a8fa4f0eb2' -> '/var/www/html/./.git/objects/c8/0a4ed87e405c7dae721cabd033f9a8fa4f0eb2'\n'./.git/objects/78/4213ddac9aa01de721bf38ca45011decd46771' -> '/var/www/html/./.git/objects/78/4213ddac9aa01de721bf38ca45011decd46771'\n'./.git/objects/78/15a41ddc5785c6d6413ee2a536d0dcb4bb9aab' -> '/var/www/html/./.git/objects/78/15a41ddc5785c6d6413ee2a536d0dcb4bb9aab'\n'./.git/objects/b0/f50c034da0b265ad20378d32cbfa9d23bfd8ac' -> '/var/www/html/./.git/objects/b0/f50c034da0b265ad20378d32cbfa9d23bfd8ac'\n'./.git/objects/b0/dd21cade0de6cf6b7dbe52ca8eecfb26af4383' -> '/var/www/html/./.git/objects/b0/dd21cade0de6cf6b7dbe52ca8eecfb26af4383'\n'./.git/objects/dc/53362df8e944fa4a55798ed96cb2b762484fce' -> '/var/www/html/./.git/objects/dc/53362df8e944fa4a55798ed96cb2b762484fce'\n'./.git/objects/dc/5ea3e010425a4e76eb6339e6afec1588ed99b3' -> '/var/www/html/./.git/objects/dc/5ea3e010425a4e76eb6339e6afec1588ed99b3'\n'./.git/objects/4d/c3b484c8dcdcdc23d90ab68fe47f589b981111' -> '/var/www/html/./.git/objects/4d/c3b484c8dcdcdc23d90ab68fe47f589b981111'\n'./.git/objects/2b/86d991c579f2b283af437c82995307a7916283' -> '/var/www/html/./.git/objects/2b/86d991c579f2b283af437c82995307a7916283'\n'./.git/objects/55/a4928d41611133bcecb5a0edee8b50dd7ea3b3' -> '/var/www/html/./.git/objects/55/a4928d41611133bcecb5a0edee8b50dd7ea3b3'\n'./.git/objects/55/aef3afd95b2099f4c2edf064cea2ce125bf5ce' -> '/var/www/html/./.git/objects/55/aef3afd95b2099f4c2edf064cea2ce125bf5ce'\n'./.git/objects/a2/6e1f5fec243eb625a124058b35b432b405794c' -> '/var/www/html/./.git/objects/a2/6e1f5fec243eb625a124058b35b432b405794c'\n'./.git/objects/a2/8e06ba52e07541738f5136f66da9be889be647' -> '/var/www/html/./.git/objects/a2/8e06ba52e07541738f5136f66da9be889be647'\n'./.git/objects/9c/a4204535bf1a9b657c9e336e06e9573a259f07' -> '/var/www/html/./.git/objects/9c/a4204535bf1a9b657c9e336e06e9573a259f07'\n'./.git/objects/5e/a18d2824e6a0da5b6ade99dfa0fe05eaeb527d' -> '/var/www/html/./.git/objects/5e/a18d2824e6a0da5b6ade99dfa0fe05eaeb527d'\n'./.git/objects/5e/26e1298a478f34c53fde6b7198097f26af87ed' -> '/var/www/html/./.git/objects/5e/26e1298a478f34c53fde6b7198097f26af87ed'\n'./.git/objects/d4/e9d2125b8770fee5c686753acc85ec072c1139' -> '/var/www/html/./.git/objects/d4/e9d2125b8770fee5c686753acc85ec072c1139'\n'./.git/objects/88/5e33db349727308b53654bc9be4cdee45d4b2f' -> '/var/www/html/./.git/objects/88/5e33db349727308b53654bc9be4cdee45d4b2f'\n'./.git/objects/cf/acd827abe4c14a4830a09b2aeb4213a589a896' -> '/var/www/html/./.git/objects/cf/acd827abe4c14a4830a09b2aeb4213a589a896'\n'./.git/objects/96/4760057929d4b2139fc95adb18558e65697dae' -> '/var/www/html/./.git/objects/96/4760057929d4b2139fc95adb18558e65697dae'\n'./.git/objects/fa/fd846bee2a797d5dc6aac6099a482f8516b44d' -> '/var/www/html/./.git/objects/fa/fd846bee2a797d5dc6aac6099a482f8516b44d'\n'./.git/objects/ec/a9f3357f29724c09a3986421cbee010813ce30' -> '/var/www/html/./.git/objects/ec/a9f3357f29724c09a3986421cbee010813ce30'\n'./.git/objects/6b/0312786f99b5f55c3f094a32aa6ff167ca31b3' -> '/var/www/html/./.git/objects/6b/0312786f99b5f55c3f094a32aa6ff167ca31b3'\n'./.git/objects/e7/551c5e617a900d4574cfa039a417d1b922d6e3' -> '/var/www/html/./.git/objects/e7/551c5e617a900d4574cfa039a417d1b922d6e3'\n'./.git/objects/e7/cf97c7b8a97bccb73ec7dcc2752e60a0f1403f' -> '/var/www/html/./.git/objects/e7/cf97c7b8a97bccb73ec7dcc2752e60a0f1403f'\n'./.git/objects/da/11ac46024df4537380d09757e487f9b3be70da' -> '/var/www/html/./.git/objects/da/11ac46024df4537380d09757e487f9b3be70da'\n'./.git/objects/da/03089d8cd565cc707b9bcc9b085bc4497ad69a' -> '/var/www/html/./.git/objects/da/03089d8cd565cc707b9bcc9b085bc4497ad69a'\n'./.git/objects/5b/2fe668568b7e4cd18f69492f76f16136dde09f' -> '/var/www/html/./.git/objects/5b/2fe668568b7e4cd18f69492f76f16136dde09f'\n'./.git/objects/0e/6f2d6c09bc57a71143ce8f6bc802fb9f93e401' -> '/var/www/html/./.git/objects/0e/6f2d6c09bc57a71143ce8f6bc802fb9f93e401'\n'./.git/objects/ca/6068a3cc25ce619a6ad29b61ab0c8f8c37f562' -> '/var/www/html/./.git/objects/ca/6068a3cc25ce619a6ad29b61ab0c8f8c37f562'\n'./.git/objects/ca/f6b0e2c865545074a149ce2fda9de1d6718d2b' -> '/var/www/html/./.git/objects/ca/f6b0e2c865545074a149ce2fda9de1d6718d2b'\n'./.git/objects/15/509758288042b1e9dc3de9dccdd4c9b6bf80c5' -> '/var/www/html/./.git/objects/15/509758288042b1e9dc3de9dccdd4c9b6bf80c5'\n'./.git/objects/03' -> '/var/www/html/./.git/objects/03'\n'./.git/objects/03/b7858b397718b837fb6e583308d240a5c70951' -> '/var/www/html/./.git/objects/03/b7858b397718b837fb6e583308d240a5c70951'\n'./.git/objects/8f' -> '/var/www/html/./.git/objects/8f'\n'./.git/objects/8f/ed90ad80f554ca6ce9c15a610fb499990fa1cf' -> '/var/www/html/./.git/objects/8f/ed90ad80f554ca6ce9c15a610fb499990fa1cf'\n'./.git/objects/a5' -> '/var/www/html/./.git/objects/a5'\n'./.git/objects/a5/1e60d9f364e315d914abe3b93316100317f4ca' -> '/var/www/html/./.git/objects/a5/1e60d9f364e315d914abe3b93316100317f4ca'\n'./.git/objects/4b' -> '/var/www/html/./.git/objects/4b'\n'./.git/objects/4b/271daa402aa0571c8e6fc13c1b2a4e70bc3747' -> '/var/www/html/./.git/objects/4b/271daa402aa0571c8e6fc13c1b2a4e70bc3747'\n'./.git/objects/4b/54c22bd96a4380e64af003564fb84907f1675d' -> '/var/www/html/./.git/objects/4b/54c22bd96a4380e64af003564fb84907f1675d'\n'./.git/objects/6a/c831dbc6deecf7e61a81f8dcdbdf68c9aae7ec' -> '/var/www/html/./.git/objects/6a/c831dbc6deecf7e61a81f8dcdbdf68c9aae7ec'\n'./.git/objects/02/3b6580073535e71d0d07e1298dcdf2dca9a696' -> '/var/www/html/./.git/objects/02/3b6580073535e71d0d07e1298dcdf2dca9a696'\n'./.git/objects/3b/f065b4a0fb2d36b12a55cb2361886936519c01' -> '/var/www/html/./.git/objects/3b/f065b4a0fb2d36b12a55cb2361886936519c01'\n'./.git/objects/14/c8d45be6271f35a33c0fca0db691386bad290b' -> '/var/www/html/./.git/objects/14/c8d45be6271f35a33c0fca0db691386bad290b'\n'./.git/objects/4f/0d97506c734c4320ac9d1c4fcb7728b557baf7' -> '/var/www/html/./.git/objects/4f/0d97506c734c4320ac9d1c4fcb7728b557baf7'\n'./.git/objects/18/6eae3d74301a65aa57845a6d280432fa99d7f1' -> '/var/www/html/./.git/objects/18/6eae3d74301a65aa57845a6d280432fa99d7f1'\n'./.git/objects/83/5136424eca16fe140634d1e4fe7513707cd1e7' -> '/var/www/html/./.git/objects/83/5136424eca16fe140634d1e4fe7513707cd1e7'\n'./.git/objects/48/aba6d963bbbaadc48e49496ec7f8a59e3ea0ab' -> '/var/www/html/./.git/objects/48/aba6d963bbbaadc48e49496ec7f8a59e3ea0ab'\n'./.git/objects/94/9860b26f4d9194b42e29d05d83e64d7cfbd72e' -> '/var/www/html/./.git/objects/94/9860b26f4d9194b42e29d05d83e64d7cfbd72e'\n'./.git/objects/d9/34a5182bb9946c6387446da48f2db220eeed0f' -> '/var/www/html/./.git/objects/d9/34a5182bb9946c6387446da48f2db220eeed0f'\n'./.git/objects/7d/9efea92994ca3fc0f156f70aa0578d9572e781' -> '/var/www/html/./.git/objects/7d/9efea92994ca3fc0f156f70aa0578d9572e781'\n'./.git/objects/39/c6e9d6b2d1df249222334d991292aad80572d8' -> '/var/www/html/./.git/objects/39/c6e9d6b2d1df249222334d991292aad80572d8'\n'./.git/objects/6f/9126097387739ded428da78693d0b5a6c1cbfb' -> '/var/www/html/./.git/objects/6f/9126097387739ded428da78693d0b5a6c1cbfb'\n'./.git/objects/d2' -> '/var/www/html/./.git/objects/d2'\n'./.git/objects/d2/51b0c5a0f49e84b525e83fee7a7d37e2306165' -> '/var/www/html/./.git/objects/d2/51b0c5a0f49e84b525e83fee7a7d37e2306165'\n'./.git/objects/cb' -> '/var/www/html/./.git/objects/cb'\n'./.git/objects/cb/ef5c9011c0c8e38efabaf9fe524c7d2d0be265' -> '/var/www/html/./.git/objects/cb/ef5c9011c0c8e38efabaf9fe524c7d2d0be265'\n'./.git/objects/cb/a5189c037a2ed1a273232cd3b24a431e5f92f3' -> '/var/www/html/./.git/objects/cb/a5189c037a2ed1a273232cd3b24a431e5f92f3'\n'./.git/objects/81' -> '/var/www/html/./.git/objects/81'\n'./.git/objects/81/9607a244ab376ff961c1be3f09ac647df3b0ed' -> '/var/www/html/./.git/objects/81/9607a244ab376ff961c1be3f09ac647df3b0ed'\n'./.git/logs/HEAD' -> '/var/www/html/./.git/logs/HEAD'\n'./.git/logs/refs/heads/master' -> '/var/www/html/./.git/logs/refs/heads/master'\n'./.git/logs/refs/remotes/scijournal/master' -> '/var/www/html/./.git/logs/refs/remotes/scijournal/master'\n'./data/users.sql' -> '/var/www/html/./data/users.sql'\n'./data/setup.php' -> '/var/www/html/./data/setup.php'\n'./users.sql' -> '/var/www/html/./users.sql'\n'./user.sql' -> '/var/www/html/./user.sql'\n'./start.cpp' -> '/var/www/html/./start.cpp'\n'./server.log' -> '/var/www/html/./server.log'\n'./kite-installer' -> '/var/www/html/./kite-installer'\n'./main/journal.db' -> '/var/www/html/./main/journal.db'\n'./main/index.php' -> '/var/www/html/./main/index.php'\n'./main/next.php' -> '/var/www/html/./main/next.php'\n'./journal.db' -> '/var/www/html/./journal.db'\n'./devtoprod.sh' -> '/var/www/html/./devtoprod.sh'\n'./startapp' -> '/var/www/html/./startapp'\n'./Users.php' -> '/var/www/html/./Users.php'\n'./start.sh' -> '/var/www/html/./start.sh'\n'./settings.json' -> '/var/www/html/./settings.json'\n'./image0.png' -> '/var/www/html/./image0.png'\n'./log.txt' -> '/var/www/html/./log.txt'\n'./posts.php' -> '/var/www/html/./posts.php'\n'./assets/themes.js' -> '/var/www/html/./assets/themes.js'\n'./assets/theme.css' -> '/var/www/html/./assets/theme.css'\n'./assets/style.php' -> '/var/www/html/./assets/style.php'\n'./assets/style.txt' -> '/var/www/html/./assets/style.txt'\n'./about/index.php' -> '/var/www/html/./about/index.php'\n'./.vscode/tasks.json' -> '/var/www/html/./.vscode/tasks.json'\n'./settings/index.php' -> '/var/www/html/./settings/index.php'\n'./settings/login.php' -> '/var/www/html/./settings/login.php'\n'./index.php' -> '/var/www/html/./index.php'\n'./.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml' -> '/var/www/html/./.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1.xml'\n'./.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1/storage_v2/_src_/schema/information_schema.FNRwLQ.meta' -> '/var/www/html/./.idea/dataSources/d824c673-f838-4245-b285-37cad05486f1/storage_v2/_src_/schema/information_schema.FNRwLQ.meta'\n'./.idea/runConfigurations/Unnamed.xml' -> '/var/www/html/./.idea/runConfigurations/Unnamed.xml'\n'./.idea/journal.iml' -> '/var/www/html/./.idea/journal.iml'\n'./.idea/modules.xml' -> '/var/www/html/./.idea/modules.xml'\n'./.idea/workspace.xml' -> '/var/www/html/./.idea/workspace.xml'\n'./.idea/vcs.xml' -> '/var/www/html/./.idea/vcs.xml'\n'./.idea/dataSources.xml' -> '/var/www/html/./.idea/dataSources.xml'\n'./.idea/sqldialects.xml' -> '/var/www/html/./.idea/sqldialects.xml'\n'./.idea/dataSources.local.xml' -> '/var/www/html/./.idea/dataSources.local.xml'\n'./.idea/php.xml' -> '/var/www/html/./.idea/php.xml'\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/log.txt b/log.txt
+--- a/log.txt	(revision 10b0abf58291e70f09f58e65fab6fcbaef005483)
++++ b/log.txt	(date 1644985252579)
+@@ -22,6 +22,7 @@
+ './.git/objects/c9/56989b29ad0767edc6cf3a202545927c3d1e76' -> '/var/www/html/./.git/objects/c9/56989b29ad0767edc6cf3a202545927c3d1e76'
+ './.git/objects/de/64e85d213a3c07eb49faab26172589c536e0e3' -> '/var/www/html/./.git/objects/de/64e85d213a3c07eb49faab26172589c536e0e3'
+ './.git/objects/4c/85e085d6c79de0da5803ee385ef8af27111324' -> '/var/www/html/./.git/objects/4c/85e085d6c79de0da5803ee385ef8af27111324'
++'./.git/objects/20/947e5358cb366e97244bfd897c10927d0918dd' -> '/var/www/html/./.git/objects/20/947e5358cb366e97244bfd897c10927d0918dd'
+ './.git/objects/20/0fd070fa7058d33861c1f72708117447393c42' -> '/var/www/html/./.git/objects/20/0fd070fa7058d33861c1f72708117447393c42'
+ './.git/objects/3e/21cbd49650757f9302c5b49cea6dd31d06aeef' -> '/var/www/html/./.git/objects/3e/21cbd49650757f9302c5b49cea6dd31d06aeef'
+ './.git/objects/3e/f543b3f1e91bfd678343fc402b1d40e41063c9' -> '/var/www/html/./.git/objects/3e/f543b3f1e91bfd678343fc402b1d40e41063c9'
+@@ -37,10 +38,13 @@
+ './.git/objects/52/f27f54fc05891764de154914daed38591b345e' -> '/var/www/html/./.git/objects/52/f27f54fc05891764de154914daed38591b345e'
+ './.git/objects/70/1f49b5edd80b0475fe414ab8c58b46cb3b5258' -> '/var/www/html/./.git/objects/70/1f49b5edd80b0475fe414ab8c58b46cb3b5258'
+ './.git/objects/79/732d9d6c040293055a3a1d419cd9e1d7de0238' -> '/var/www/html/./.git/objects/79/732d9d6c040293055a3a1d419cd9e1d7de0238'
++'./.git/objects/1b/72c6b14d0952262d46d5ae378630c563e16438' -> '/var/www/html/./.git/objects/1b/72c6b14d0952262d46d5ae378630c563e16438'
+ './.git/objects/1b/3467682e9ea4336508666fb4007da9d2013bc7' -> '/var/www/html/./.git/objects/1b/3467682e9ea4336508666fb4007da9d2013bc7'
+ './.git/objects/8d/ceb30cd08421de9c7624c5a4e9b3a68b901a54' -> '/var/www/html/./.git/objects/8d/ceb30cd08421de9c7624c5a4e9b3a68b901a54'
+ './.git/objects/31/5e7939c317bf071e90794819b1be37aed77bed' -> '/var/www/html/./.git/objects/31/5e7939c317bf071e90794819b1be37aed77bed'
++'./.git/objects/31/a24dac903d1dd310a34a2662a90dfb256670c0' -> '/var/www/html/./.git/objects/31/a24dac903d1dd310a34a2662a90dfb256670c0'
+ './.git/objects/31/dccaa61a33420853404608aabd12d443677d4a' -> '/var/www/html/./.git/objects/31/dccaa61a33420853404608aabd12d443677d4a'
++'./.git/objects/c4/76a1fb2eb5a8c28357c5e86a0f0dcf598da73b' -> '/var/www/html/./.git/objects/c4/76a1fb2eb5a8c28357c5e86a0f0dcf598da73b'
+ './.git/objects/c4/1fd957878a2b034ce271e62b35966fe430bc0e' -> '/var/www/html/./.git/objects/c4/1fd957878a2b034ce271e62b35966fe430bc0e'
+ './.git/objects/58/dfa2d2cf2472de675f309172f6cbd924d12122' -> '/var/www/html/./.git/objects/58/dfa2d2cf2472de675f309172f6cbd924d12122'
+ './.git/objects/19/5af2692917bb1c4634ba56ab800ca9fa3dc73f' -> '/var/www/html/./.git/objects/19/5af2692917bb1c4634ba56ab800ca9fa3dc73f'
+@@ -75,6 +79,7 @@
+ './.git/objects/92/dab6d586190b0f2e196072dad499c95eb26174' -> '/var/www/html/./.git/objects/92/dab6d586190b0f2e196072dad499c95eb26174'
+ './.git/objects/28/49324d65167a11cb674dc086e0fdde2b1dc613' -> '/var/www/html/./.git/objects/28/49324d65167a11cb674dc086e0fdde2b1dc613'
+ './.git/objects/40/d1d1dd2f496dd9eec47be7e543f04170f9a0d1' -> '/var/www/html/./.git/objects/40/d1d1dd2f496dd9eec47be7e543f04170f9a0d1'
++'./.git/objects/00/3940ce2ee58aac0bbfa3b8d0cc0f0f45102cfe' -> '/var/www/html/./.git/objects/00/3940ce2ee58aac0bbfa3b8d0cc0f0f45102cfe'
+ './.git/objects/00/aab8b8d8658d9285f2710bcf5664fc6032a733' -> '/var/www/html/./.git/objects/00/aab8b8d8658d9285f2710bcf5664fc6032a733'
+ './.git/objects/a7/23f3e8204383c6073e87b6dcfd7d8ddb99ae3d' -> '/var/www/html/./.git/objects/a7/23f3e8204383c6073e87b6dcfd7d8ddb99ae3d'
+ './.git/objects/32/99d954711215a1b668e748b96f451a4327e5e3' -> '/var/www/html/./.git/objects/32/99d954711215a1b668e748b96f451a4327e5e3'
+@@ -82,6 +87,7 @@
+ './.git/objects/90/104979c41110d3f3cce68053f75ad8630bb735' -> '/var/www/html/./.git/objects/90/104979c41110d3f3cce68053f75ad8630bb735'
+ './.git/objects/aa/f0e35b41dac87533bdfce4d4e4f94f578dc36d' -> '/var/www/html/./.git/objects/aa/f0e35b41dac87533bdfce4d4e4f94f578dc36d'
+ './.git/objects/56/d8c8b2cb3aa7f1c4fb2f2d98d40769e6e41aca' -> '/var/www/html/./.git/objects/56/d8c8b2cb3aa7f1c4fb2f2d98d40769e6e41aca'
++'./.git/objects/f8/d3c18b2f6cc50d9e9e97e1e35f2ac726d7f205' -> '/var/www/html/./.git/objects/f8/d3c18b2f6cc50d9e9e97e1e35f2ac726d7f205'
+ './.git/objects/f8/1975522b0ae4b57f9907e98b89401dd83e2cd3' -> '/var/www/html/./.git/objects/f8/1975522b0ae4b57f9907e98b89401dd83e2cd3'
+ './.git/objects/fc/a56fb108e160a32a7a1809312446aee9d6709c' -> '/var/www/html/./.git/objects/fc/a56fb108e160a32a7a1809312446aee9d6709c'
+ './.git/objects/46/069490650d6c71ecdfb3ab613810e64e05eb0c' -> '/var/www/html/./.git/objects/46/069490650d6c71ecdfb3ab613810e64e05eb0c'
+@@ -98,7 +104,9 @@
+ './.git/objects/f0/4b358079e94362806779ab08ae1a420feef052' -> '/var/www/html/./.git/objects/f0/4b358079e94362806779ab08ae1a420feef052'
+ './.git/objects/49/29ae2f7991742e1ee4fa408de0b282241a981b' -> '/var/www/html/./.git/objects/49/29ae2f7991742e1ee4fa408de0b282241a981b'
+ './.git/objects/49/cf179ff9afeca4c59f1e427b4b9802eb19f6c3' -> '/var/www/html/./.git/objects/49/cf179ff9afeca4c59f1e427b4b9802eb19f6c3'
++'./.git/objects/16/775ff3bdd90bde871ef8e6e8830d86b9c291fb' -> '/var/www/html/./.git/objects/16/775ff3bdd90bde871ef8e6e8830d86b9c291fb'
+ './.git/objects/16/b1f86846554a398e10ee7be38638c9e0fe4303' -> '/var/www/html/./.git/objects/16/b1f86846554a398e10ee7be38638c9e0fe4303'
++'./.git/objects/5a/741bf02d448499d624e51082b535879f1d88cd' -> '/var/www/html/./.git/objects/5a/741bf02d448499d624e51082b535879f1d88cd'
+ './.git/objects/5a/28fef09ab319a17809f5c394dc87d882f71f72' -> '/var/www/html/./.git/objects/5a/28fef09ab319a17809f5c394dc87d882f71f72'
+ './.git/objects/b8/dc9e6d18edf1f6ea112dad73e29ad130e02537' -> '/var/www/html/./.git/objects/b8/dc9e6d18edf1f6ea112dad73e29ad130e02537'
+ './.git/objects/b8/cb3fdc1794b858f7fec37b4baeef2849f5f6e3' -> '/var/www/html/./.git/objects/b8/cb3fdc1794b858f7fec37b4baeef2849f5f6e3'
+@@ -117,6 +125,7 @@
+ './.git/objects/6c/ac13d26433d9257fecac56e29c609c501c486f' -> '/var/www/html/./.git/objects/6c/ac13d26433d9257fecac56e29c609c501c486f'
+ './.git/objects/a8/74c6f38b760ecef90da58fd542bf8eb0461b24' -> '/var/www/html/./.git/objects/a8/74c6f38b760ecef90da58fd542bf8eb0461b24'
+ './.git/objects/ac/ef2a49552581e6ad93ebe9693111f3cffc7f27' -> '/var/www/html/./.git/objects/ac/ef2a49552581e6ad93ebe9693111f3cffc7f27'
++'./.git/objects/ac/faffbf8f7d83c57ce0e31a39fa9c1d0d72166c' -> '/var/www/html/./.git/objects/ac/faffbf8f7d83c57ce0e31a39fa9c1d0d72166c'
+ './.git/objects/ac/70f5f185f2ff20e4902d8e34d8c5c2caa2e6fd' -> '/var/www/html/./.git/objects/ac/70f5f185f2ff20e4902d8e34d8c5c2caa2e6fd'
+ './.git/objects/f2/3beb08794192552f0f9a5d94bb2cc9103b4ee8' -> '/var/www/html/./.git/objects/f2/3beb08794192552f0f9a5d94bb2cc9103b4ee8'
+ './.git/objects/c8/0a4ed87e405c7dae721cabd033f9a8fa4f0eb2' -> '/var/www/html/./.git/objects/c8/0a4ed87e405c7dae721cabd033f9a8fa4f0eb2'
+@@ -128,6 +137,7 @@
+ './.git/objects/dc/5ea3e010425a4e76eb6339e6afec1588ed99b3' -> '/var/www/html/./.git/objects/dc/5ea3e010425a4e76eb6339e6afec1588ed99b3'
+ './.git/objects/4d/c3b484c8dcdcdc23d90ab68fe47f589b981111' -> '/var/www/html/./.git/objects/4d/c3b484c8dcdcdc23d90ab68fe47f589b981111'
+ './.git/objects/2b/86d991c579f2b283af437c82995307a7916283' -> '/var/www/html/./.git/objects/2b/86d991c579f2b283af437c82995307a7916283'
++'./.git/objects/55/5c22e17a288af7ffcc8723943d879e00340eff' -> '/var/www/html/./.git/objects/55/5c22e17a288af7ffcc8723943d879e00340eff'
+ './.git/objects/55/a4928d41611133bcecb5a0edee8b50dd7ea3b3' -> '/var/www/html/./.git/objects/55/a4928d41611133bcecb5a0edee8b50dd7ea3b3'
+ './.git/objects/55/aef3afd95b2099f4c2edf064cea2ce125bf5ce' -> '/var/www/html/./.git/objects/55/aef3afd95b2099f4c2edf064cea2ce125bf5ce'
+ './.git/objects/a2/6e1f5fec243eb625a124058b35b432b405794c' -> '/var/www/html/./.git/objects/a2/6e1f5fec243eb625a124058b35b432b405794c'
+@@ -142,6 +152,7 @@
+ './.git/objects/fa/fd846bee2a797d5dc6aac6099a482f8516b44d' -> '/var/www/html/./.git/objects/fa/fd846bee2a797d5dc6aac6099a482f8516b44d'
+ './.git/objects/ec/a9f3357f29724c09a3986421cbee010813ce30' -> '/var/www/html/./.git/objects/ec/a9f3357f29724c09a3986421cbee010813ce30'
+ './.git/objects/6b/0312786f99b5f55c3f094a32aa6ff167ca31b3' -> '/var/www/html/./.git/objects/6b/0312786f99b5f55c3f094a32aa6ff167ca31b3'
++'./.git/objects/e7/d0339ee873de52c168141292cf7d32048a8986' -> '/var/www/html/./.git/objects/e7/d0339ee873de52c168141292cf7d32048a8986'
+ './.git/objects/e7/551c5e617a900d4574cfa039a417d1b922d6e3' -> '/var/www/html/./.git/objects/e7/551c5e617a900d4574cfa039a417d1b922d6e3'
+ './.git/objects/e7/cf97c7b8a97bccb73ec7dcc2752e60a0f1403f' -> '/var/www/html/./.git/objects/e7/cf97c7b8a97bccb73ec7dcc2752e60a0f1403f'
+ './.git/objects/da/11ac46024df4537380d09757e487f9b3be70da' -> '/var/www/html/./.git/objects/da/11ac46024df4537380d09757e487f9b3be70da'
+@@ -151,13 +162,9 @@
+ './.git/objects/ca/6068a3cc25ce619a6ad29b61ab0c8f8c37f562' -> '/var/www/html/./.git/objects/ca/6068a3cc25ce619a6ad29b61ab0c8f8c37f562'
+ './.git/objects/ca/f6b0e2c865545074a149ce2fda9de1d6718d2b' -> '/var/www/html/./.git/objects/ca/f6b0e2c865545074a149ce2fda9de1d6718d2b'
+ './.git/objects/15/509758288042b1e9dc3de9dccdd4c9b6bf80c5' -> '/var/www/html/./.git/objects/15/509758288042b1e9dc3de9dccdd4c9b6bf80c5'
+-'./.git/objects/03' -> '/var/www/html/./.git/objects/03'
+ './.git/objects/03/b7858b397718b837fb6e583308d240a5c70951' -> '/var/www/html/./.git/objects/03/b7858b397718b837fb6e583308d240a5c70951'
+-'./.git/objects/8f' -> '/var/www/html/./.git/objects/8f'
+ './.git/objects/8f/ed90ad80f554ca6ce9c15a610fb499990fa1cf' -> '/var/www/html/./.git/objects/8f/ed90ad80f554ca6ce9c15a610fb499990fa1cf'
+-'./.git/objects/a5' -> '/var/www/html/./.git/objects/a5'
+ './.git/objects/a5/1e60d9f364e315d914abe3b93316100317f4ca' -> '/var/www/html/./.git/objects/a5/1e60d9f364e315d914abe3b93316100317f4ca'
+-'./.git/objects/4b' -> '/var/www/html/./.git/objects/4b'
+ './.git/objects/4b/271daa402aa0571c8e6fc13c1b2a4e70bc3747' -> '/var/www/html/./.git/objects/4b/271daa402aa0571c8e6fc13c1b2a4e70bc3747'
+ './.git/objects/4b/54c22bd96a4380e64af003564fb84907f1675d' -> '/var/www/html/./.git/objects/4b/54c22bd96a4380e64af003564fb84907f1675d'
+ './.git/objects/6a/c831dbc6deecf7e61a81f8dcdbdf68c9aae7ec' -> '/var/www/html/./.git/objects/6a/c831dbc6deecf7e61a81f8dcdbdf68c9aae7ec'
+@@ -173,13 +180,25 @@
+ './.git/objects/7d/9efea92994ca3fc0f156f70aa0578d9572e781' -> '/var/www/html/./.git/objects/7d/9efea92994ca3fc0f156f70aa0578d9572e781'
+ './.git/objects/39/c6e9d6b2d1df249222334d991292aad80572d8' -> '/var/www/html/./.git/objects/39/c6e9d6b2d1df249222334d991292aad80572d8'
+ './.git/objects/6f/9126097387739ded428da78693d0b5a6c1cbfb' -> '/var/www/html/./.git/objects/6f/9126097387739ded428da78693d0b5a6c1cbfb'
+-'./.git/objects/d2' -> '/var/www/html/./.git/objects/d2'
+ './.git/objects/d2/51b0c5a0f49e84b525e83fee7a7d37e2306165' -> '/var/www/html/./.git/objects/d2/51b0c5a0f49e84b525e83fee7a7d37e2306165'
+-'./.git/objects/cb' -> '/var/www/html/./.git/objects/cb'
++'./.git/objects/d2/8d40b18823a27071d0e9ce89c149adb3f9c4ee' -> '/var/www/html/./.git/objects/d2/8d40b18823a27071d0e9ce89c149adb3f9c4ee'
+ './.git/objects/cb/ef5c9011c0c8e38efabaf9fe524c7d2d0be265' -> '/var/www/html/./.git/objects/cb/ef5c9011c0c8e38efabaf9fe524c7d2d0be265'
+ './.git/objects/cb/a5189c037a2ed1a273232cd3b24a431e5f92f3' -> '/var/www/html/./.git/objects/cb/a5189c037a2ed1a273232cd3b24a431e5f92f3'
+-'./.git/objects/81' -> '/var/www/html/./.git/objects/81'
+ './.git/objects/81/9607a244ab376ff961c1be3f09ac647df3b0ed' -> '/var/www/html/./.git/objects/81/9607a244ab376ff961c1be3f09ac647df3b0ed'
++'./.git/objects/66/b63158362940a4a6c4c07cf12c6cad0486ee31' -> '/var/www/html/./.git/objects/66/b63158362940a4a6c4c07cf12c6cad0486ee31'
++'./.git/objects/f4/a0d0211c53bd17793682da6825b352f4fc8e0c' -> '/var/www/html/./.git/objects/f4/a0d0211c53bd17793682da6825b352f4fc8e0c'
++'./.git/objects/ab/aa9a04745ef78330caf48d56a3c7ee5c440944' -> '/var/www/html/./.git/objects/ab/aa9a04745ef78330caf48d56a3c7ee5c440944'
++'./.git/objects/99/23f384cdc4424beb41bede38d57652f8eebb61' -> '/var/www/html/./.git/objects/99/23f384cdc4424beb41bede38d57652f8eebb61'
++'./.git/objects/2a/c6b80c1037c4229aa3cd978c76fcfc979d515c' -> '/var/www/html/./.git/objects/2a/c6b80c1037c4229aa3cd978c76fcfc979d515c'
++'./.git/objects/17/cd71d3c9a1ba708d062aed27b146903eda37bf' -> '/var/www/html/./.git/objects/17/cd71d3c9a1ba708d062aed27b146903eda37bf'
++'./.git/objects/7c/4e0cbfe97d0aea1d759541fbbac66e5d1b15dc' -> '/var/www/html/./.git/objects/7c/4e0cbfe97d0aea1d759541fbbac66e5d1b15dc'
++'./.git/objects/2f/0655b4afe0ec4f528292acae9a2047ee2b3426' -> '/var/www/html/./.git/objects/2f/0655b4afe0ec4f528292acae9a2047ee2b3426'
++'./.git/objects/5c/6cc37e8d221b28a434976f91972f8da9b83818' -> '/var/www/html/./.git/objects/5c/6cc37e8d221b28a434976f91972f8da9b83818'
++'./.git/objects/76/5f0a45bf90994ed2520af229243d0c70667aa8' -> '/var/www/html/./.git/objects/76/5f0a45bf90994ed2520af229243d0c70667aa8'
++'./.git/objects/a0/083bea0d3d9e258e26b50573cec890994d6df0' -> '/var/www/html/./.git/objects/a0/083bea0d3d9e258e26b50573cec890994d6df0'
++'./.git/objects/d8/ef2eac487ecd8b6cccf26400b6ae1ea5af71c9' -> '/var/www/html/./.git/objects/d8/ef2eac487ecd8b6cccf26400b6ae1ea5af71c9'
++'./.git/objects/53/7dce6af3f2909f4b8cf606848c8697f42f45a3' -> '/var/www/html/./.git/objects/53/7dce6af3f2909f4b8cf606848c8697f42f45a3'
++'./.git/objects/10/b0abf58291e70f09f58e65fab6fcbaef005483' -> '/var/www/html/./.git/objects/10/b0abf58291e70f09f58e65fab6fcbaef005483'
+ './.git/logs/HEAD' -> '/var/www/html/./.git/logs/HEAD'
+ './.git/logs/refs/heads/master' -> '/var/www/html/./.git/logs/refs/heads/master'
+ './.git/logs/refs/remotes/scijournal/master' -> '/var/www/html/./.git/logs/refs/remotes/scijournal/master'
+@@ -208,6 +227,8 @@
+ './assets/style.txt' -> '/var/www/html/./assets/style.txt'
+ './about/index.php' -> '/var/www/html/./about/index.php'
+ './.vscode/tasks.json' -> '/var/www/html/./.vscode/tasks.json'
++'./settings/settings.json' -> '/var/www/html/./settings/settings.json'
++'./settings/.vscode/launch.json' -> '/var/www/html/./settings/.vscode/launch.json'
+ './settings/index.php' -> '/var/www/html/./settings/index.php'
+ './settings/login.php' -> '/var/www/html/./settings/login.php'
+ './index.php' -> '/var/www/html/./index.php'

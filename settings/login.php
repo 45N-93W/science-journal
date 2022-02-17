@@ -8,5 +8,5 @@ $cmd = $db->query("SELECT * FROM USERS where USERS_EMAIL = '$_POST[username]' AN
 if ($cmd->result == true) {
     $_SESSION["loggedin"] = true;
 } elseif ($cmd->result == false) {
-    header("Location:/main");
+    echo "<a href='../settings'>failed</a>";
 }
