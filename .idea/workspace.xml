@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/about/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
+    <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/journal.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/tasks.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Users.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/about/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/style.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/style.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/setup.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/users.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/copytodev.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/Users.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/about/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/assets/style.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/assets/style.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/Users.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/journal.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/kite-installer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/server.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/start.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/startapp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/user.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journak/users.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/journal.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/kite-installer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/server.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/start.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/startapp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/user.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journak/journak/users.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/journal.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kite-installer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/journal.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/start.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/startapp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,24 +67,11 @@
   <component name="ComposerSettings">
     <execution />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-        <option value="CSS File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.1">
-    <include_path>
-      <path value="$PROJECT_DIR$" />
-    </include_path>
   </component>
   <component name="ProjectId" id="24NiCG2EmfesamP7mbDbmDeAcTx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -45,37 +84,24 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DatabaseDriversLRU" value="sqlite&#10;mysql" />
+    <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="database.data.extractors.current.export.id" value="Comma-separated (CSV)_id" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/main/index.php" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
+    <property name="last_opened_file_path" value="$USER_HOME$/postboard" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="PHP Built-in Web Server.Unnamed">
+  <component name="RunManager" selected="PHPUnit.journak">
     <configuration name="users.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/data/users.sql" />
       <script-mode>FILE</script-mode>
       <method v="2" />
     </configuration>
     <configuration name="journak" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <CommandLine>
-        <PhpTestInterpreterSettings>
-          <option name="interpreterName" value="PHP 8.1" />
-        </PhpTestInterpreterSettings>
-      </CommandLine>
       <TestRunner directory="$PROJECT_DIR$/journak" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Database Script.users.sql" />
-      <item itemvalue="PHP Built-in Web Server.Unnamed" />
-      <item itemvalue="PHPUnit.journak" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="PHPUnit.journak" />
@@ -96,62 +122,7 @@
       <workItem from="1644022283090" duration="599000" />
       <workItem from="1644115757261" duration="689000" />
       <workItem from="1644122612246" duration="21000" />
-      <workItem from="1644344305832" duration="122000" />
-      <workItem from="1644344435369" duration="10658000" />
-      <workItem from="1644466661521" duration="1250000" />
-      <workItem from="1644522860348" duration="3683000" />
-      <workItem from="1644540388060" duration="3176000" />
     </task>
-    <task id="LOCAL-00001" summary="added">
-      <created>1644344351524</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1644344351524</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added dark mode and light mode support">
-      <created>1644346861582</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1644346861582</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added dark mode and light mode support">
-      <created>1644346884542</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1644346884542</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added changes">
-      <created>1644524794253</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1644524794253</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added changes">
-      <created>1644525075190</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1644525075190</updated>
-    </task>
-    <task id="LOCAL-00006" summary="added changes">
-      <created>1644527447550</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1644527447550</updated>
-    </task>
-    <task id="LOCAL-00007" summary="added changes">
-      <created>1644540650783</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1644540650783</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,9 +141,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added" />
-    <MESSAGE value="added dark mode and light mode support" />
-    <MESSAGE value="added changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added changes" />
   </component>
 </project>
