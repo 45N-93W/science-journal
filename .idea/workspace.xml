@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="98676be4-a923-47c1-a362-e6b938aa2fac" name="Changes" comment="added changes">
       <change afterPath="$PROJECT_DIR$/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/themes.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/themes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/main/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/settings/login.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +101,7 @@
       <workItem from="1644522860348" duration="3683000" />
       <workItem from="1644540388060" duration="3176000" />
       <workItem from="1645114412955" duration="600000" />
+      <workItem from="1645415222600" duration="1784000" />
     </task>
     <task id="LOCAL-00001" summary="added">
       <created>1644344351524</created>

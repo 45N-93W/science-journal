@@ -8,7 +8,7 @@
       <schema-mapping />
     </data-source>
     <data-source name="journal@localhost" uuid="d824c673-f838-4245-b285-37cad05486f1">
-      <database-info product="MySQL" version="8.0.27-0ubuntu0.21.10.1" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MYSQL" exact-version="8.0.27" exact-driver-version="8.0">
+      <database-info product="MySQL" version="8.0.28-0ubuntu2" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MYSQL" exact-version="8.0.28" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
