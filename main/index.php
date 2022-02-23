@@ -9,6 +9,7 @@ $_COOKIE["username"] = null;
     <meta name="description" content="journal ">
     <meta name="description" content="journal ">
     <link rel="stylesheet" type="text/css" href="../assets/theme.css">
+    <link rel="icon" type="image/ico" href="../assetings/favicon.ico">
     <script src="../assets/themes.js"></script>
 </head>
 

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="journal ">
     <title> scientific Journal -about</title>
+    <link rel="icon" type="image/ico" href="../assetings/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../assets/theme.css">
     <script src="../assets/themes.js"></script>
 </head>
